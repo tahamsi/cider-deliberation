@@ -1,0 +1,50 @@
+seed: 42
+output_dir: outputs/full_experiment_v5/qwen3
+agent:
+  type: llm
+  provider: ollama
+  base_url: http://127.0.0.1:11434
+  model_name: qwen3:latest
+  model_note: Qwen 3 local Ollama model. Qwen 2.5 was requested but is not installed locally.
+  base_temperature: 0.0
+  agent_temperatures: [0.0, 0.15, 0.3, 0.45]
+  personas:
+    - concise_solver
+    - skeptical_solver
+    - step_by_step_solver
+    - counterexample_seeker
+  max_tokens: 128
+  think: false
+  timeout_seconds: 240
+  num_ctx: 2048
+  cache: true
+datasets:
+  paths:
+    - data/processed/real_llm_v4_test_balanced.jsonl
+methods:
+  - single_agent
+  - self_consistency
+  - majority_vote
+  - standard_multi_agent_debate
+  - consensagent_style
+  - free_mad_style
+  - agentauditor_style
+  - c3_style_causal_credit_analysis
+  - conformal_social_choice
+  - dar_style_diversity_aware_retention
+  - adaptive_stability_detection
+  - cider_full
+  - cider_full_tuned
+  - cider_verified
+method_params:
+  num_agents: 4
+  num_samples: 4
+  rounds: 2
+  max_exposure_probability: 0.35
+  max_visible_messages: 2
+  tuned_max_exposure_probability: 0.5
+  tuned_max_visible_messages: 2
+  verified_max_exposure_probability: 0.5
+  verified_max_visible_messages: 2
+  verified_use_verifier_agent: true
+  verified_verifier_bonus: 1.25

@@ -1,0 +1,25 @@
+seed: 2026
+output_dir: outputs/full_eval
+agent:
+  type: llm
+  provider: local
+  model_name: configurable-model
+  temperature: 0.7
+datasets:
+  paths:
+    - data/processed/all.jsonl
+methods:
+  - single_agent
+  - self_consistency
+  - majority_vote
+  - standard_multi_agent_debate
+  - consensagent_style
+  - free_mad_style
+  - agentauditor_style
+  - c3_style_causal_credit_analysis
+  - conformal_social_choice
+  - cider_full
+method_params:
+  num_agents: 7
+  num_samples: 11
+  rounds: 3

@@ -1,0 +1,33 @@
+seed: 42
+output_dir: outputs/real_llm_v3
+agent:
+  type: llm
+  provider: ollama
+  base_url: http://127.0.0.1:11434
+  model_name: mistral:latest
+  model_selection_note: Fixed stronger local model selected before v3 evaluation after a latency/format pilot.
+  base_temperature: 0.0
+  agent_temperatures: [0.0, 0.15, 0.3, 0.45]
+  personas:
+    - concise_solver
+    - skeptical_solver
+    - step_by_step_solver
+    - counterexample_seeker
+  max_tokens: 48
+  timeout_seconds: 120
+  num_ctx: 2048
+  cache: true
+datasets:
+  paths:
+    - data/processed/real_llm_v3_balanced.jsonl
+methods:
+  - single_agent
+  - majority_vote
+  - standard_multi_agent_debate
+  - cider_full_tuned
+method_params:
+  num_agents: 4
+  num_samples: 4
+  rounds: 2
+  tuned_max_exposure_probability: 0.5
+  tuned_max_visible_messages: 2

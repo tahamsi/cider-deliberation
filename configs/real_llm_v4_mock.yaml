@@ -1,0 +1,31 @@
+seed: 42
+output_dir: outputs/full_experiment_v4/mock
+agent:
+  type: mock
+  model_name: deterministic-mock
+  temperature: 0.0
+datasets:
+  paths:
+    - data/processed/real_llm_v4_test_balanced.jsonl
+methods:
+  - single_agent
+  - self_consistency
+  - majority_vote
+  - standard_multi_agent_debate
+  - consensagent_style
+  - free_mad_style
+  - agentauditor_style
+  - c3_style_causal_credit_analysis
+  - conformal_social_choice
+  - dar_style_diversity_aware_retention
+  - adaptive_stability_detection
+  - cider_full
+  - cider_full_tuned
+method_params:
+  num_agents: 4
+  num_samples: 4
+  rounds: 2
+  max_exposure_probability: 0.35
+  max_visible_messages: 2
+  tuned_max_exposure_probability: 0.5
+  tuned_max_visible_messages: 2

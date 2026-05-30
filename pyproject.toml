@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cider-deliberation"
+version = "0.1.0"
+description = "Benchmark framework for causal exposure control in multi-agent LLM deliberation."
+requires-python = ">=3.11"
+dependencies = [
+  "datasets>=2.17,<4",
+  "pandas",
+  "numpy",
+  "scipy",
+  "scikit-learn",
+  "pydantic",
+  "pyyaml",
+  "requests",
+  "tqdm",
+  "tenacity",
+  "matplotlib",
+]
+
+[project.optional-dependencies]
+test = ["pytest"]
+stats = ["statsmodels"]
+
+[tool.setuptools]
+packages = ["agents", "analysis", "datasets", "experiments", "methods", "metrics"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

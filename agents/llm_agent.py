@@ -1,0 +1,201 @@
+from __future__ import annotations
+
+import json
+import re
+import time
+from typing import Any
+
+import requests
+
+from agents.base import AgentResponse, BaseAgent
+from datasets.schemas import TaskExample
+
+
+class LLMAgent(BaseAgent):
+    """Local/API LLM adapter.
+
+    The implemented provider is Ollama because it is available locally on the
+    test machine. Other providers should be added as explicit branches; this
+    class must never fall back to mock outputs.
+    """
+
+    _CACHE: dict[str, dict[str, Any]] = {}
+
+    def answer(self, task: TaskExample, context: list[dict] | None = None, mode: str = "independent") -> AgentResponse:
+        provider = self.config.get("provider", "ollama")
+        if provider != "ollama":
+            raise NotImplementedError(f"Unsupported LLM provider: {provider}")
+        prompt = self._build_prompt(task, context or [], mode)
+        started = time.time()
+        temperature = self._temperature_for_mode(mode)
+        payload = {
+            "model": self.model_name,
+            "prompt": prompt,
+            "stream": False,
+            "options": {
+                "temperature": temperature,
+                "num_predict": int(self.config.get("max_tokens", 64)),
+                "num_ctx": int(self.config.get("num_ctx", 2048)),
+                "seed": self.seed,
+            },
+        }
+        if "think" in self.config:
+            payload["think"] = bool(self.config["think"])
+        url = str(self.config.get("base_url", "http://127.0.0.1:11434")).rstrip("/") + "/api/generate"
+        timeout = float(self.config.get("timeout_seconds", 60))
+        cache_key = json.dumps({"url": url, "payload": payload}, sort_keys=True)
+        if bool(self.config.get("cache", True)) and cache_key in self._CACHE:
+            data = self._CACHE[cache_key]
+        else:
+            try:
+                response = requests.post(url, json=payload, timeout=timeout)
+                response.raise_for_status()
+                data = response.json()
+                if bool(self.config.get("cache", True)):
+                    self._CACHE[cache_key] = data
+            except Exception as exc:
+                raise RuntimeError(f"Ollama request failed for {self.model_name}: {exc}") from exc
+        text = str(data.get("response", "")).strip()
+        answer, answer_index = self._parse_answer(text, task)
+        prompt_tokens = int(data.get("prompt_eval_count") or len(prompt.split()))
+        completion_tokens = int(data.get("eval_count") or len(text.split()))
+        return AgentResponse(
+            answer=answer,
+            answer_index=answer_index,
+            rationale=text,
+            confidence=self._confidence(text, task, answer_index),
+            tokens_in=prompt_tokens,
+            tokens_out=completion_tokens,
+            cost_usd=0.0,
+            metadata={
+                "provider": "ollama",
+                "elapsed_seconds": round(time.time() - started, 3),
+                "raw_response": text,
+                "mode": mode,
+                "persona": self.config.get("persona", "general_solver"),
+                "temperature": temperature,
+                "cache_hit": cache_key in self._CACHE and data is self._CACHE.get(cache_key),
+            },
+        )
+
+    def _temperature_for_mode(self, mode: str) -> float:
+        if "temperature" in self.config:
+            return float(self.config["temperature"])
+        mode_offsets = {
+            "independent": 0.0,
+            "self_consistency": 0.2,
+            "debate": 0.1,
+            "free_mad": 0.3,
+            "c3_credit": 0.15,
+            "cider_final": 0.05,
+            "cider_verify": 0.0,
+            "audit": 0.0,
+        }
+        return float(self.config.get("base_temperature", 0.0)) + mode_offsets.get(mode, 0.0)
+
+    def _build_prompt(self, task: TaskExample, context: list[dict[str, Any]], mode: str) -> str:
+        persona = str(self.config.get("persona", "general_solver"))
+        persona_text = {
+            "concise_solver": "Solve directly and avoid unnecessary explanation.",
+            "skeptical_solver": "Look for traps, false assumptions, and misleading options.",
+            "step_by_step_solver": "Use compact step-by-step reasoning before selecting the answer.",
+            "counterexample_seeker": "Try to disconfirm the most obvious answer before finalizing.",
+            "domain_expert": "Use domain knowledge where relevant and be precise.",
+            "adversarial_reviewer": "Critically review visible answers and do not copy them without evidence.",
+        }.get(persona, "Solve the task accurately.")
+        mode_text = {
+            "independent": "Answer independently. You have not seen other agents.",
+            "self_consistency": "Produce an independent sample; diversity is acceptable if justified.",
+            "debate": "Review visible prior responses, then decide whether to keep or change your answer.",
+            "free_mad": "Use visible prior responses only if they add concrete evidence.",
+            "c3_credit": "Estimate which answer has independent causal support, not just social agreement.",
+            "audit": "Audit answer quality, then give the best final answer.",
+            "cider_final": (
+                "CIDeR final phase: do not follow the majority unless the reasoning independently justifies it. "
+                "Prefer your independent answer unless exposed evidence corrects a concrete error."
+            ),
+            "cider_verify": (
+                "CIDeR verifier phase: select the answer with the strongest independent evidence. "
+                "Penalize unsupported copying, invalid option labels, arithmetic mistakes, and social agreement without reasoning."
+            ),
+        }.get(mode, "Answer the task.")
+        choices = ""
+        if task.choices:
+            labels = [chr(ord("A") + i) for i in range(len(task.choices))]
+            choices = "\nChoices:\n" + "\n".join(f"{lab}. {choice}" for lab, choice in zip(labels, task.choices))
+            instruction = "Return valid compact JSON only: {\"answer\":\"<letter>\",\"confidence\":0.0,\"rationale\":\"short reason\"}."
+        else:
+            instruction = "Return valid compact JSON only: {\"answer\":\"<final value>\",\"confidence\":0.0,\"rationale\":\"short reason\"}."
+        visible = ""
+        if context:
+            snippets = []
+            for rec in context[-6:]:
+                snippets.append(
+                    f"- {rec.get('agent','agent')} answered {rec.get('answer')} with confidence {rec.get('confidence')}: "
+                    f"{str(rec.get('rationale',''))[:240]}"
+                )
+            visible = "\nVisible prior responses:\n" + "\n".join(snippets)
+        return (
+            "You are solving a benchmark question. Be concise and do not include extra text outside JSON.\n"
+            f"Persona: {persona_text}\nMode: {mode_text}\n"
+            f"Question:\n{task.question.strip()}{choices}{visible}\n\n{instruction}"
+        )
+
+    def _parse_answer(self, text: str, task: TaskExample) -> tuple[str, int | None]:
+        candidate = text
+        try:
+            parsed = json.loads(self._extract_json_object(text))
+            if isinstance(parsed, dict) and parsed.get("answer") is not None:
+                candidate = str(parsed["answer"])
+        except Exception:
+            match = re.search(r'"answer"\s*:\s*"([^"]+)"', text, flags=re.I)
+            if match:
+                candidate = match.group(1)
+        candidate = candidate.strip()
+        if task.choices:
+            labels = [chr(ord("A") + i) for i in range(len(task.choices))]
+            letter = re.search(r"\b([A-Z])\b", candidate.upper())
+            if letter and letter.group(1) in labels:
+                idx = labels.index(letter.group(1))
+                return labels[idx], idx
+            lowered = candidate.lower()
+            for idx, choice in enumerate(task.choices):
+                if str(choice).strip().lower() in lowered:
+                    return labels[idx], idx
+            return candidate[:32] or "UNKNOWN", None
+        boxed = re.search(r"\\boxed\{([^}]+)\}", candidate)
+        if boxed:
+            candidate = boxed.group(1)
+        numbers = re.findall(r"[-+]?\d+(?:\.\d+)?(?:/\d+(?:\.\d+)?)?", candidate.replace(",", ""))
+        return (numbers[-1] if numbers else candidate[:64] or "UNKNOWN"), None
+
+    def _extract_json_object(self, text: str) -> str:
+        start = text.find("{")
+        end = text.rfind("}")
+        if start >= 0 and end > start:
+            return text[start:end + 1]
+        return text
+
+    def _confidence(self, text: str, task: TaskExample, answer_index: int | None) -> float:
+        conf = 0.35
+        json_valid = False
+        try:
+            parsed = json.loads(self._extract_json_object(text))
+            json_valid = isinstance(parsed, dict)
+            conf = float(parsed.get("confidence", 0.55))
+        except Exception:
+            pass
+        if json_valid:
+            conf += 0.15
+        if task.choices and answer_index is not None:
+            conf += 0.15
+        if not task.choices and self._parse_answer(text, task)[0] != "UNKNOWN":
+            conf += 0.1
+        rationale_words = len(text.split())
+        if 3 <= rationale_words <= 80:
+            conf += 0.1
+        if task.choices and answer_index is None:
+            conf -= 0.3
+        if task.choices and answer_index is None:
+            conf *= 0.5
+        return max(0.01, min(0.99, conf))

@@ -1,0 +1,57 @@
+seed: 42
+output_dir: outputs/full_experiment_v6/mistral_160
+agent:
+  type: llm
+  provider: ollama
+  base_url: http://127.0.0.1:11434
+  model_name: mistral:latest
+  model_selection_note: V6 fixed local Mistral run on balanced 160-example subset with GPU-backed Ollama.
+  base_temperature: 0.0
+  agent_temperatures: [0.0, 0.15, 0.3, 0.45]
+  personas:
+    - concise_solver
+    - skeptical_solver
+    - step_by_step_solver
+    - counterexample_seeker
+  max_tokens: 64
+  timeout_seconds: 180
+  num_ctx: 2048
+  cache: true
+datasets:
+  paths:
+    - data/processed/real_llm_v6_mistral_160.jsonl
+methods:
+  - single_agent
+  - self_consistency
+  - majority_vote
+  - standard_multi_agent_debate
+  - consensagent_style
+  - free_mad_style
+  - free_mad_official_adapter
+  - agentauditor_style
+  - c3_style_causal_credit_analysis
+  - conformal_social_choice
+  - dar_style_diversity_aware_retention
+  - dar_official_adapter
+  - adaptive_stability_detection
+  - cider_full
+  - cider_full_tuned
+  - cider_verified
+  - cider_sota
+method_params:
+  num_agents: 4
+  num_samples: 4
+  rounds: 2
+  max_exposure_probability: 0.35
+  max_visible_messages: 2
+  tuned_max_exposure_probability: 0.5
+  tuned_max_visible_messages: 2
+  verified_max_exposure_probability: 0.5
+  verified_max_visible_messages: 2
+  verified_use_verifier_agent: true
+  verified_verifier_bonus: 1.25
+  sota_max_exposure_probability: 0.35
+  sota_max_visible_messages: 2
+  sota_use_verifier_agent: true
+  sota_verifier_tie_margin: 1.18
+  sota_verifier_bonus: 0.75

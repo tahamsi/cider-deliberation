@@ -1,0 +1,33 @@
+seed: 42
+output_dir: outputs/real_llm_v2_adversarial
+agent:
+  type: llm
+  provider: ollama
+  base_url: http://127.0.0.1:11434
+  model_name: llama3.2:latest
+  base_temperature: 0.0
+  agent_temperatures: [0.0, 0.15, 0.3]
+  personas:
+    - concise_solver
+    - skeptical_solver
+    - step_by_step_solver
+  max_tokens: 48
+  timeout_seconds: 60
+  num_ctx: 2048
+  cache: true
+datasets:
+  paths:
+    - data/processed/real_llm_v2_balanced.jsonl
+methods:
+  - single_agent
+  - majority_vote
+  - standard_multi_agent_debate
+  - free_mad_style
+  - c3_style_causal_credit_analysis
+  - cider_full
+method_params:
+  num_agents: 4
+  num_samples: 4
+  rounds: 2
+  max_exposure_probability: 0.35
+  max_visible_messages: 2

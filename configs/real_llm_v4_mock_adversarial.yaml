@@ -1,0 +1,25 @@
+experiment_name: full_experiment_v4_mock_adversarial
+seed: 42
+output_dir: outputs/full_experiment_v4/mock_adversarial
+agent:
+  type: mock
+  model_name: deterministic-mock
+  temperature: 0.0
+  max_tokens: 96
+datasets:
+  paths:
+    - data/processed/real_llm_v4_test_balanced.jsonl
+methods:
+  - majority_vote
+  - standard_multi_agent_debate
+  - cider_full_tuned
+method_params:
+  num_agents: 4
+  num_samples: 4
+  rounds: 2
+  max_exposure_probability: 0.5
+  max_visible_messages: 2
+  temperature: 0.0
+adversarial:
+  num_adversaries: 2
+  wrong_confidence: 0.95

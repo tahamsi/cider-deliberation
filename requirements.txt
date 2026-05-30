@@ -1,0 +1,13 @@
+datasets>=2.17,<4
+pandas
+numpy
+scipy
+scikit-learn
+pydantic
+pyyaml
+requests
+tqdm
+tenacity
+matplotlib
+pytest
+statsmodels

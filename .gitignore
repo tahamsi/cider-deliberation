@@ -1,0 +1,32 @@
+# Python environments and caches
+.venv/
+.venv_py310_backup/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*$py.class
+
+# Packaging/build outputs
+*.egg-info/
+build/
+dist/
+
+# Local configuration and secrets
+.env
+.env.*
+
+# Generated datasets and experiment outputs.
+# Users should regenerate these locally from the documented commands.
+data/
+outputs/
+
+# Cloned upstream repositories used for local audit/adaptation.
+external_baselines/official_sources/
+
+# Generated report binaries
+*.pdf
+
+# OS/editor noise
+.DS_Store
+*.swp
+*.swo

@@ -1,0 +1,33 @@
+seed: 42
+output_dir: outputs/real_llm_v1
+agent:
+  type: llm
+  provider: ollama
+  base_url: http://127.0.0.1:11434
+  model_name: llama3.2:latest
+  temperature: 0.0
+  max_tokens: 48
+  timeout_seconds: 60
+  num_ctx: 2048
+datasets:
+  paths:
+    - data/processed/real_llm_v1_balanced.jsonl
+methods:
+  - single_agent
+  - self_consistency
+  - majority_vote
+  - standard_multi_agent_debate
+  - consensagent_style
+  - free_mad_style
+  - agentauditor_style
+  - c3_style_causal_credit_analysis
+  - conformal_social_choice
+  - dar_style_diversity_aware_retention
+  - adaptive_stability_detection
+  - cider_full
+method_params:
+  num_agents: 2
+  num_samples: 2
+  rounds: 1
+  max_exposure_probability: 0.2
+  max_visible_messages: 1
