@@ -1,0 +1,42 @@
+seed: 42
+output_dir: outputs/full_experiment_v6/no_randomized_exposure_mistral_40_balanced
+agent:
+  type: llm
+  provider: ollama
+  base_url: http://127.0.0.1:11434
+  model_name: mistral:latest
+  model_selection_note: V6 no-randomized-exposure ablation on the local Mistral setting.
+  base_temperature: 0.0
+  agent_temperatures: [0.0, 0.15, 0.3, 0.45]
+  personas:
+    - concise_solver
+    - skeptical_solver
+    - step_by_step_solver
+    - counterexample_seeker
+  max_tokens: 64
+  timeout_seconds: 180
+  num_ctx: 2048
+  cache: true
+datasets:
+  paths:
+    - data/processed/no_exposure_balanced/real_llm_v6_mistral_160.jsonl
+methods:
+  - cider_verified
+  - cider_sota
+method_params:
+  num_agents: 4
+  num_samples: 4
+  rounds: 2
+  max_exposure_probability: 0.0
+  max_visible_messages: 2
+  tuned_max_exposure_probability: 0.0
+  tuned_max_visible_messages: 2
+  verified_max_exposure_probability: 0.0
+  verified_max_visible_messages: 2
+  verified_use_verifier_agent: true
+  verified_verifier_bonus: 1.25
+  sota_max_exposure_probability: 0.0
+  sota_max_visible_messages: 2
+  sota_use_verifier_agent: true
+  sota_verifier_tie_margin: 1.18
+  sota_verifier_bonus: 0.75

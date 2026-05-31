@@ -23,7 +23,7 @@ from methods import METHODS
 from metrics.accuracy import accuracy, is_correct
 from metrics.agreement import agreement_rate
 from metrics.calibration import brier_score, expected_calibration_error
-from metrics.causal_influence import exposure_density, mean_exposure_load
+from metrics.causal_influence import aggregate_causal_thesis_metrics, causal_thesis_metrics, exposure_density, mean_exposure_load
 from metrics.cost import total_cost
 from metrics.dissent import dissent_rate
 from metrics.persuasion import answer_switch_rate
@@ -75,6 +75,7 @@ def build_agents(config: dict[str, Any], seed: int, n: int) -> list[BaseAgent]:
 def record_for(task: TaskExample, method_name: str, result: Any) -> dict[str, Any]:
     correct = is_correct(result.prediction, task.answer, result.prediction_index, task.answer_index)
     costs = total_cost(result.transcript)
+    causal_metrics = causal_thesis_metrics(result.transcript, task.answer, task.answer_index)
     return {
         "dataset": task.dataset,
         "id": task.id,
@@ -93,6 +94,7 @@ def record_for(task: TaskExample, method_name: str, result: Any) -> dict[str, An
         "answer_switch_rate": answer_switch_rate(result.transcript),
         "exposure_density": exposure_density(result.exposure_matrix),
         "mean_exposure_load": mean_exposure_load(result.exposure_matrix),
+        **causal_metrics,
         "metadata": result.metadata,
     }
 
@@ -103,6 +105,7 @@ def aggregate(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
         grouped[(rec["method"], rec["dataset"])].append(rec)
     rows = []
     for (method, dataset), items in sorted(grouped.items()):
+        causal = aggregate_causal_thesis_metrics(items)
         rows.append({
             "method": method,
             "dataset": dataset,
@@ -117,6 +120,17 @@ def aggregate(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
             "avg_dissent_rate": sum(i["dissent_rate"] for i in items) / len(items),
             "avg_exposure_density": sum(i["exposure_density"] for i in items) / len(items),
             "avg_mean_exposure_load": sum(i["mean_exposure_load"] for i in items) / len(items),
+            "ccs": causal["ccs"],
+            "chs": causal["chs"],
+            "pci": causal["pci"],
+            "wcr": causal["wcr"],
+            "pds": causal["pds"],
+            "ccs_corrections": causal.get("ccs_corrections", 0.0),
+            "ccs_opportunities": causal.get("ccs_opportunities", 0.0),
+            "chs_harms": causal.get("chs_harms", 0.0),
+            "chs_opportunities": causal.get("chs_opportunities", 0.0),
+            "pci_contaminated_switches": causal.get("pci_contaminated_switches", 0.0),
+            "pci_exposed_switches": causal.get("pci_exposed_switches", 0.0),
         })
     return rows
 

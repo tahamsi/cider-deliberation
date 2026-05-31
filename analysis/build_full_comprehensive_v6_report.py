@@ -7,6 +7,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from metrics.causal_influence import aggregate_causal_thesis_metrics, causal_thesis_metrics
+
 
 ROOT = Path("outputs/full_experiment_v6")
 REPORT = ROOT / "full-comprehensive-v6.md"
@@ -84,6 +86,35 @@ def aggregate_summary(run_dir: Path) -> list[dict[str, Any]]:
     return out
 
 
+def causal_summary(run_dir: Path) -> list[dict[str, Any]]:
+    predictions = read_jsonl(run_dir / "predictions.jsonl")
+    grouped: dict[str, list[dict[str, Any]]] = {}
+    for rec in predictions:
+        if "ccs_corrections" not in rec:
+            rec = rec | causal_thesis_metrics(rec.get("transcript", []), rec.get("answer", ""), rec.get("answer_index"))
+        grouped.setdefault(rec["method"], []).append(rec)
+    rows = []
+    for method, items in grouped.items():
+        metrics = aggregate_causal_thesis_metrics(items)
+        rows.append({
+            "method": method,
+            "n": len(items),
+            "ccs": metrics["ccs"],
+            "chs": metrics["chs"],
+            "pci": metrics["pci"],
+            "wcr": metrics["wcr"],
+            "pds": metrics["pds"],
+            "ccs_events": int(metrics.get("ccs_corrections", 0.0)),
+            "ccs_opps": int(metrics.get("ccs_opportunities", 0.0)),
+            "chs_events": int(metrics.get("chs_harms", 0.0)),
+            "chs_opps": int(metrics.get("chs_opportunities", 0.0)),
+            "pci_events": int(metrics.get("pci_contaminated_switches", 0.0)),
+            "pci_switches": int(metrics.get("pci_exposed_switches", 0.0)),
+        })
+    rows.sort(key=lambda r: (r["ccs"], -r["chs"], -r["pci"], -r["wcr"]), reverse=True)
+    return rows
+
+
 def json_block(path: Path) -> str:
     return "```json\n" + json.dumps(read_json(path), indent=2, sort_keys=True) + "\n```"
 
@@ -104,10 +135,16 @@ def main() -> None:
     qwen_dir = ROOT / "qwen3_32"
     adv_dir = ROOT / "adversarial_mistral_40"
     addenda = ROOT / "v6_addenda_tables"
+    no_exposure_dir = ROOT / "no_randomized_exposure_mistral_40_balanced"
 
     m_summary = aggregate_summary(mistral_dir)
     q_summary = aggregate_summary(qwen_dir)
     adv_summary = aggregate_summary(adv_dir)
+    m_causal = causal_summary(mistral_dir)
+    q_causal = causal_summary(qwen_dir)
+    adv_causal = causal_summary(adv_dir)
+    no_exposure_summary = aggregate_summary(no_exposure_dir) if (no_exposure_dir / "predictions.jsonl").exists() else []
+    no_exposure_causal = causal_summary(no_exposure_dir) if (no_exposure_dir / "predictions.jsonl").exists() else []
 
     summary_cols = [
         "method",
@@ -122,6 +159,21 @@ def main() -> None:
         "avg_dissent_rate",
         "avg_exposure_density",
         "avg_mean_exposure_load",
+    ]
+    causal_cols = [
+        "method",
+        "n",
+        "ccs",
+        "chs",
+        "pci",
+        "wcr",
+        "pds",
+        "ccs_events",
+        "ccs_opps",
+        "chs_events",
+        "chs_opps",
+        "pci_events",
+        "pci_switches",
     ]
 
     official_status = read(Path("external_baselines/official_baseline_status_v6.md"))
@@ -148,8 +200,11 @@ def main() -> None:
         "outputs/full_experiment_v6/adversarial_mistral_40/predictions.jsonl",
         "outputs/full_experiment_v6/v6_addenda_tables/ablation_cider_variants_mistral160.csv",
         "outputs/full_experiment_v6/v6_addenda_tables/adversarial_mistral8_summary.csv",
+        "outputs/full_experiment_v6/no_randomized_exposure_mistral_40_balanced/aggregate_metrics.csv",
+        "outputs/full_experiment_v6/no_randomized_exposure_mistral_40_balanced/predictions.jsonl",
         "configs/real_llm_v6_mistral_160.yaml",
         "configs/real_llm_v6_qwen3_32.yaml",
+        "configs/real_llm_v6_mistral_no_randomized_exposure_40.yaml",
         "configs/real_llm_v6_mistral_adversarial_40.yaml",
         "configs/real_llm_v6_mistral_full720.yaml",
         "external_baselines/official_baseline_status_v6.md",
@@ -284,6 +339,18 @@ python analysis/md_to_pdf.py \\
             + "It also beats both official-source-informed adapters in this local protocol.",
         ),
         section(
+            "## Causal Thesis Metrics: Mistral 160",
+            (
+                "Definitions: CCS is causal correction score, CHS is causal harm score, PCI is persuasion contamination index, "
+                "WCR is wrong convergence rate, and PDS is persuasion drift score. These are transcript-level operational proxies, "
+                "not randomized causal identification unless the run randomized exposure.\n\n"
+                + md_table(m_causal, causal_cols)
+                + "\n\n"
+                + "Interpretation: these values expose whether accuracy gains come with correction or persuasion contamination. "
+                + "They should be read alongside accuracy rather than after it."
+            ),
+        ),
+        section(
             "## Pairwise Result: Mistral 160",
             read(mistral_dir / "tables" / "pairwise_mcnemar.md")
             + "\n\n"
@@ -304,6 +371,7 @@ python analysis/md_to_pdf.py \\
             + "The best CIDeR-family methods reach 0.3750. "
             + "This means the V6 local SOTA claim should be scoped to the completed Mistral protocol, not generalized to Qwen3.",
         ),
+        section("## Causal Thesis Metrics: Qwen3 32", md_table(q_causal, causal_cols)),
         section(
             "## Qwen3 Pairwise Results",
             read(qwen_dir / "tables" / "pairwise_mcnemar.md"),
@@ -321,6 +389,26 @@ python analysis/md_to_pdf.py \\
             + "became too slow; this table is the reliable V6 ablation evidence.",
         ),
         section(
+            "## No-Randomized-Exposure Ablation",
+            (
+                (
+                    "This is the completed balanced no-randomized-exposure condition: 40 Mistral examples, 5 per dataset, "
+                    "with CIDeR deliberation exposure probabilities set to 0.0. For verifier-based variants, the verifier may still "
+                    "read prior answers, so exposure density can be nonzero even though randomized agent-to-agent deliberation exposure is disabled.\n\n"
+                    + md_table(no_exposure_summary, summary_cols)
+                    + "\n\n"
+                    + "Causal thesis metrics for the no-randomized-exposure run:\n\n"
+                    + md_table(no_exposure_causal, causal_cols)
+                    + "\n\n"
+                    + "Interpretation: CCS, CHS, PCI, and PDS are all 0.0 because no final deliberating agents were exposed to peer messages. "
+                    + "Accuracy remains competitive on this small balanced subset, so the current evidence does not prove that randomized exposure itself is the source of the Mistral gain; "
+                    + "it shows that the verifier/evidence aggregation path remains strong even when randomized peer exposure is removed."
+                )
+                if no_exposure_summary
+                else "No completed no-randomized-exposure run was found when this report was generated."
+            ),
+        ),
+        section(
             "## Adversarial Social-Pressure Test",
             md_table(adv_summary, summary_cols)
             + "\n\n"
@@ -328,6 +416,7 @@ python analysis/md_to_pdf.py \\
             + "and the Free-MAD official adapter at 0.2500 macro accuracy on the small adversarial subset. "
             + "This is an improvement over V3's failure mode because CIDeR no longer drops below the main baselines, but it is not an adversarial accuracy win.",
         ),
+        section("## Causal Thesis Metrics: Adversarial Test", md_table(adv_causal, causal_cols)),
         section(
             "## Critical Analysis",
             (
@@ -335,8 +424,9 @@ python analysis/md_to_pdf.py \\
                 "Second, the comparison includes the full required baseline set plus optional baselines and stronger official-source-informed adapters. "
                 "Third, `cider_verified` wins the completed Mistral main table rather than only an ablation table.\n\n"
                 "The evidence is still not publication-final. The Qwen3 run is small and does not favor CIDeR. The adversarial run is very small and shows a tie, "
-                "not a win. The 720-example Mistral configuration exists but was not completed in this run. Exact upstream baseline execution remains limited by "
-                "incompatible or unavailable external code, so V6 uses transparent adapters where necessary."
+                "not a win. The 720-example Mistral configuration exists but was not completed in this run. The Mistral config uses `max_tokens: 64`, which is a real "
+                "resource constraint and likely suppresses multi-step reasoning, especially on AIME where every method scored 0.00. Exact upstream baseline execution "
+                "also remains limited by incompatible or unavailable external code, so V6 uses transparent adapters where necessary."
             ),
         ),
         section(
@@ -352,6 +442,7 @@ python analysis/md_to_pdf.py \\
                 "- A claim that all external baselines were run as unmodified upstream repositories.\n"
                 "- A claim that CIDeR already beats the strongest baselines on Qwen3.\n"
                 "- A strong adversarial superiority claim; the current adversarial run shows a tie at small `n`."
+                "\n- A claim that `max_tokens: 64` is neutral across tasks; it is an explicit resource constraint and must be stress-tested."
             ),
         ),
         section(
@@ -379,15 +470,26 @@ python analysis/md_to_pdf.py \\
         section("## Test Status", "`pytest -q` passed: 7/7 tests."),
         "# Part II: Main v6 Result Tables",
         section("## Main Overall Method Summary", md_table(m_summary, summary_cols)),
+        section("## Main Causal Thesis Metrics", md_table(m_causal, causal_cols)),
         section("## Main Accuracy By Dataset", read(mistral_dir / "tables" / "accuracy_by_dataset_all_methods.md")),
         section("## Main CIDeR Pairwise McNemar-Style Comparison", read(mistral_dir / "tables" / "pairwise_mcnemar.md")),
         "# Part III: Qwen3 Cross-Model Results",
         section("## Qwen3 Overall Method Summary", md_table(q_summary, summary_cols)),
+        section("## Qwen3 Causal Thesis Metrics", md_table(q_causal, causal_cols)),
         section("## Qwen3 Accuracy By Dataset", read(qwen_dir / "tables" / "accuracy_by_dataset_all_methods.md")),
         section("## Qwen3 Pairwise McNemar-Style Comparison", read(qwen_dir / "tables" / "pairwise_mcnemar.md")),
         "# Part IV: Ablation and Adversarial Results",
         section("## CIDeR Ablation Summary", read(addenda / "ablation_cider_variants_mistral160.md")),
+        section(
+            "## No-Randomized-Exposure Ablation Summary",
+            md_table(no_exposure_summary, summary_cols) if no_exposure_summary else "Not completed.",
+        ),
+        section(
+            "## No-Randomized-Exposure Causal Metrics",
+            md_table(no_exposure_causal, causal_cols) if no_exposure_causal else "Not completed.",
+        ),
         section("## Adversarial Overall Method Summary", md_table(adv_summary, summary_cols)),
+        section("## Adversarial Causal Thesis Metrics", md_table(adv_causal, causal_cols)),
         section("## Adversarial Addendum Table", read(addenda / "adversarial_mistral8_summary.md")),
         "# Part V: Run Metadata and Configurations",
         section("## Mistral Run Metadata", json_block(mistral_dir / "run_metadata.json")),
