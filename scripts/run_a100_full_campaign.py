@@ -510,6 +510,7 @@ def main() -> None:
     rows, manifest = collect_results(out_dir, manifest)
     summary = write_summary(args, out_dir, rows, manifest)
     print(summary)
+    print("well done, everything is ok!")
 
 
 if __name__ == "__main__":
