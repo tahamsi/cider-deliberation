@@ -41,6 +41,9 @@ class CiderFull(BaseMethod):
         final = transcript[len(agents):]
         final_rows = range(len(agents), len(agents) * 2)
         exposure_load = [float(exposure[row].sum()) for row in final_rows]
+        disable_copy_penalty = bool(self.params.get("disable_copy_penalty", False))
+        disable_correction_bonus = bool(self.params.get("disable_correction_bonus", False))
+        disable_exposure_penalty = bool(self.params.get("disable_exposure_penalty", False))
         independent_counts: dict[tuple[str, int | None], int] = {}
         for rec in independent:
             key = (rec["answer"], rec.get("answer_index"))
@@ -61,11 +64,12 @@ class CiderFull(BaseMethod):
             copied_visible_majority = bool(visible_majority and rec.get("answer") == visible_majority)
             unsupported_copy = switched and copied_visible_majority and evidence_improvement <= 0.0
             useful_correction = switched and evidence_improvement > 0.0 and quality >= independent_quality
-            switch_penalty = 1.6 if unsupported_copy else (0.85 if useful_correction else (1.25 if switched else 1.0))
+            switch_penalty = 1.0 if disable_copy_penalty else (1.6 if unsupported_copy else (0.85 if useful_correction else (1.25 if switched else 1.0)))
             independent_prior = 1.0 + independent_counts.get(key, 0) / max(len(agents), 1)
             dissent_bonus = 1.1 if independent_counts.get(key, 0) == 1 else 1.0
-            correction_bonus = 1.25 if useful_correction else 1.0
-            counterfactual_robustness = 0.6 if unsupported_copy else 1.0
+            correction_bonus = 1.0 if disable_correction_bonus else (1.25 if useful_correction else 1.0)
+            counterfactual_robustness = 1.0 if disable_copy_penalty else (0.6 if unsupported_copy else 1.0)
+            exposure_denominator = 1.0 if disable_exposure_penalty else exposure_penalty
             weight = (
                 float(rec["confidence"])
                 * independent_prior
@@ -73,7 +77,7 @@ class CiderFull(BaseMethod):
                 * dissent_bonus
                 * correction_bonus
                 * counterfactual_robustness
-                / (exposure_penalty * switch_penalty)
+                / (exposure_denominator * switch_penalty)
             )
             final_weights.append(weight)
             diagnostics.append({
@@ -114,6 +118,9 @@ class CiderFull(BaseMethod):
             "answer_total_scores": {f"{k[0]}:{k[1]}": v for k, v in totals.items()},
             "max_exposure_probability": max_exposure,
             "max_visible_messages": max_visible,
+            "disable_copy_penalty": disable_copy_penalty,
+            "disable_correction_bonus": disable_correction_bonus,
+            "disable_exposure_penalty": disable_exposure_penalty,
             "independent_vote_counts": {f"{k[0]}:{k[1]}": v for k, v in independent_counts.items()},
             "counterfactual_diagnostics": diagnostics,
         }
@@ -295,9 +302,9 @@ class CiderVerified(CiderFull):
             exposure_load = float(exposure[row].sum())
             validity = self._answer_validity(task, rec)
             reliability = 1.0 + independent_counts.get(key, 0) / max(len(independent), 1)
-            correction_bonus = 1.35 if useful_correction else 1.0
-            copy_penalty = 0.35 if unsupported_copy else (0.75 if switched and copied_visible_majority else 1.0)
-            exposure_penalty = 1.0 / (1.0 + 0.35 * exposure_load)
+            correction_bonus = 1.0 if bool(self.params.get("disable_correction_bonus", False)) else (1.35 if useful_correction else 1.0)
+            copy_penalty = 1.0 if bool(self.params.get("disable_copy_penalty", False)) else (0.35 if unsupported_copy else (0.75 if switched and copied_visible_majority else 1.0))
+            exposure_penalty = 1.0 if bool(self.params.get("disable_exposure_penalty", False)) else 1.0 / (1.0 + 0.35 * exposure_load)
             support = float(rec["confidence"]) * self._rationale_quality(rec) * validity * reliability * correction_bonus * copy_penalty * exposure_penalty
             parts["final_support"] += support
             parts["validity"] = max(parts["validity"], validity)
@@ -529,9 +536,9 @@ class CiderSOTA(CiderVerified):
             unsupported_copy = switched and copied_visible_majority and evidence_gain <= 0.05
             useful_correction = switched and evidence_gain >= 0.25 and validity >= self._answer_validity(task, indep)
             exposure_load = float(exposure[row].sum())
-            anti_copy_penalty = 0.25 if unsupported_copy else (0.75 if switched and copied_visible_majority else 1.0)
-            exposure_penalty = 1.0 / (1.0 + 0.22 * exposure_load)
-            correction_bonus = 1.45 if useful_correction else 1.0
+            anti_copy_penalty = 1.0 if bool(self.params.get("disable_copy_penalty", False)) else (0.25 if unsupported_copy else (0.75 if switched and copied_visible_majority else 1.0))
+            exposure_penalty = 1.0 if bool(self.params.get("disable_exposure_penalty", False)) else 1.0 / (1.0 + 0.22 * exposure_load)
+            correction_bonus = 1.0 if bool(self.params.get("disable_correction_bonus", False)) else (1.45 if useful_correction else 1.0)
             stability_bonus = 1.18 if stable else 1.0
             prior = 1.0 + independent_counts.get(key, 0) / max(len(independent), 1)
             support = (

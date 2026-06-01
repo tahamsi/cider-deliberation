@@ -337,6 +337,141 @@ Run the benchmark directly on the smoke config:
 python experiments/run_benchmark.py --config configs/small_smoke_test.yaml
 ```
 
+## Full Experiment
+
+Use this path on a raw Ubuntu server with an A100 80GB when the goal is to remove the main V6 caveats: incomplete 720-example run, weak token budget, missing exposure ablation grid, small adversarial test, backbone dependence, missing causal thesis metrics, and single-seed fragility.
+
+### 1. Setup Raw Ubuntu
+
+Clone the repository, then run the A100 setup script:
+
+```bash
+git clone https://github.com/tahamsi/cider-deliberation.git
+cd cider-deliberation
+scripts/setup_a100_ubuntu.sh
+source .venv/bin/activate
+```
+
+The setup script installs Python dependencies, installs Ollama if needed, checks GPU visibility, pulls the default A100 model set, and prepares the local virtual environment.
+
+Default model pull list:
+
+```text
+mistral:latest
+qwen3:32b
+qwen2.5:32b
+llama3.1:70b
+```
+
+Override models if your Ollama registry uses different tags:
+
+```bash
+A100_MODELS="mistral:latest qwen3:32b qwen2.5:32b llama3.1:70b" \
+  scripts/setup_a100_ubuntu.sh
+```
+
+Dry-run the server setup without changing the machine:
+
+```bash
+DRY_RUN=1 SKIP_GPU_CHECK=1 SKIP_APT=1 SKIP_OLLAMA_INSTALL=1 SKIP_MODEL_PULL=1 \
+  scripts/setup_a100_ubuntu.sh
+```
+
+### 2. Download and Preprocess All Datasets
+
+```bash
+scripts/download_preprocess_all.sh
+```
+
+This creates:
+
+```text
+data/processed/all.jsonl
+data/processed/real_llm_v4_dev.jsonl
+data/processed/real_llm_v4_test_balanced.jsonl
+data/processed/real_llm_v6_mistral_160.jsonl
+data/processed/real_llm_v6_qwen3_32.jsonl
+```
+
+Dry-run dataset commands without downloading:
+
+```bash
+DRY_RUN=1 scripts/download_preprocess_all.sh
+```
+
+### 3. Run the Full A100 Campaign
+
+Run inside `tmux` or another persistent session. With no `--max_examples`, the script uses the full balanced held-out split at `data/processed/real_llm_v4_test_balanced.jsonl`.
+
+```bash
+python scripts/run_a100_full_campaign.py \
+  --out_dir outputs/a100_full_v7 \
+  --dataset data/processed/real_llm_v4_test_balanced.jsonl \
+  --models "mistral:latest,qwen3:32b,qwen2.5:32b,llama3.1:70b" \
+  --seeds "42,43,44,45,46" \
+  --max_tokens 512 \
+  --token_sweep "64,512,1024" \
+  --num_ctx 4096
+```
+
+The single campaign script runs:
+
+- `pytest -q`
+- full balanced main comparisons for every model and seed
+- all required and optional baselines
+- CIDeR variants
+- exposure-grid ablations including exposure `0.0`
+- verifier on/off ablations
+- copy-penalty, correction-bonus, and exposure-penalty ablations
+- token-budget sensitivity checks
+- adversarial tests with two high-confidence wrong agents
+- CCS, CHS, PCI, WCR, and PDS collection for every aggregate row
+
+Main consolidated outputs:
+
+```text
+outputs/a100_full_v7/a100_campaign_results.csv
+outputs/a100_full_v7/a100_campaign_manifest.json
+outputs/a100_full_v7/a100_campaign_summary.md
+```
+
+The file to send back for analysis first is:
+
+```text
+outputs/a100_full_v7/a100_campaign_summary.md
+```
+
+If needed, also send:
+
+```text
+outputs/a100_full_v7/a100_campaign_results.csv
+```
+
+### 4. Validate Locally Before Server Run
+
+Dry-run the entire campaign plan:
+
+```bash
+python scripts/run_a100_full_campaign.py \
+  --dry_run \
+  --smoke \
+  --provider mock \
+  --models deterministic-mock \
+  --seeds "42,43" \
+  --out_dir outputs/a100_dry_run_check
+```
+
+Run the real local smoke campaign:
+
+```bash
+python scripts/run_a100_full_campaign.py \
+  --smoke \
+  --provider mock \
+  --models deterministic-mock \
+  --seeds "42" \
+  --out_dir outputs/a100_smoke_check
+```
+
 ## Main Experiment Commands
 
 ### Mock and Development Runs
