@@ -1,0 +1,1199 @@
+[
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/main/mistral_latest/seed_42.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/main/mistral_latest/seed_42",
+    "run_type": "main",
+    "seed": 42,
+    "variant": "all_methods"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/main/mistral_latest/seed_43.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/main/mistral_latest/seed_43",
+    "run_type": "main",
+    "seed": 43,
+    "variant": "all_methods"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/main/mistral_latest/seed_44.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/main/mistral_latest/seed_44",
+    "run_type": "main",
+    "seed": 44,
+    "variant": "all_methods"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/main/mistral_latest/seed_45.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/main/mistral_latest/seed_45",
+    "run_type": "main",
+    "seed": 45,
+    "variant": "all_methods"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/main/mistral_latest/seed_46.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/main/mistral_latest/seed_46",
+    "run_type": "main",
+    "seed": 46,
+    "variant": "all_methods"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/main/qwen3_32b/seed_42.yaml",
+    "model": "qwen3:32b",
+    "output_dir": "outputs/a100_full_v10/main/qwen3_32b/seed_42",
+    "run_type": "main",
+    "seed": 42,
+    "variant": "all_methods"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/main/qwen3_32b/seed_43.yaml",
+    "model": "qwen3:32b",
+    "output_dir": "outputs/a100_full_v10/main/qwen3_32b/seed_43",
+    "run_type": "main",
+    "seed": 43,
+    "variant": "all_methods"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/main/qwen3_32b/seed_44.yaml",
+    "model": "qwen3:32b",
+    "output_dir": "outputs/a100_full_v10/main/qwen3_32b/seed_44",
+    "run_type": "main",
+    "seed": 44,
+    "variant": "all_methods"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/main/qwen3_32b/seed_45.yaml",
+    "model": "qwen3:32b",
+    "output_dir": "outputs/a100_full_v10/main/qwen3_32b/seed_45",
+    "run_type": "main",
+    "seed": 45,
+    "variant": "all_methods"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/main/qwen3_32b/seed_46.yaml",
+    "model": "qwen3:32b",
+    "output_dir": "outputs/a100_full_v10/main/qwen3_32b/seed_46",
+    "run_type": "main",
+    "seed": 46,
+    "variant": "all_methods"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/main/qwen2_5_32b/seed_42.yaml",
+    "model": "qwen2.5:32b",
+    "output_dir": "outputs/a100_full_v10/main/qwen2_5_32b/seed_42",
+    "run_type": "main",
+    "seed": 42,
+    "variant": "all_methods"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/main/qwen2_5_32b/seed_43.yaml",
+    "model": "qwen2.5:32b",
+    "output_dir": "outputs/a100_full_v10/main/qwen2_5_32b/seed_43",
+    "run_type": "main",
+    "seed": 43,
+    "variant": "all_methods"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/main/qwen2_5_32b/seed_44.yaml",
+    "model": "qwen2.5:32b",
+    "output_dir": "outputs/a100_full_v10/main/qwen2_5_32b/seed_44",
+    "run_type": "main",
+    "seed": 44,
+    "variant": "all_methods"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/main/qwen2_5_32b/seed_45.yaml",
+    "model": "qwen2.5:32b",
+    "output_dir": "outputs/a100_full_v10/main/qwen2_5_32b/seed_45",
+    "run_type": "main",
+    "seed": 45,
+    "variant": "all_methods"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/main/qwen2_5_32b/seed_46.yaml",
+    "model": "qwen2.5:32b",
+    "output_dir": "outputs/a100_full_v10/main/qwen2_5_32b/seed_46",
+    "run_type": "main",
+    "seed": 46,
+    "variant": "all_methods"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/main/llama3_1_70b/seed_42.yaml",
+    "model": "llama3.1:70b",
+    "output_dir": "outputs/a100_full_v10/main/llama3_1_70b/seed_42",
+    "run_type": "main",
+    "seed": 42,
+    "variant": "all_methods"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/main/llama3_1_70b/seed_43.yaml",
+    "model": "llama3.1:70b",
+    "output_dir": "outputs/a100_full_v10/main/llama3_1_70b/seed_43",
+    "run_type": "main",
+    "seed": 43,
+    "variant": "all_methods"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/main/llama3_1_70b/seed_44.yaml",
+    "model": "llama3.1:70b",
+    "output_dir": "outputs/a100_full_v10/main/llama3_1_70b/seed_44",
+    "run_type": "main",
+    "seed": 44,
+    "variant": "all_methods"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/main/llama3_1_70b/seed_45.yaml",
+    "model": "llama3.1:70b",
+    "output_dir": "outputs/a100_full_v10/main/llama3_1_70b/seed_45",
+    "run_type": "main",
+    "seed": 45,
+    "variant": "all_methods"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/main/llama3_1_70b/seed_46.yaml",
+    "model": "llama3.1:70b",
+    "output_dir": "outputs/a100_full_v10/main/llama3_1_70b/seed_46",
+    "run_type": "main",
+    "seed": 46,
+    "variant": "all_methods"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_42/cider_sota_exposure_0_0.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_42/cider_sota_exposure_0_0",
+    "run_type": "ablation",
+    "seed": 42,
+    "variant": "cider_sota_exposure_0_0"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_42/cider_verified_exposure_0_0.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_42/cider_verified_exposure_0_0",
+    "run_type": "ablation",
+    "seed": 42,
+    "variant": "cider_verified_exposure_0_0"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_42/cider_sota_exposure_0_2.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_42/cider_sota_exposure_0_2",
+    "run_type": "ablation",
+    "seed": 42,
+    "variant": "cider_sota_exposure_0_2"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_42/cider_verified_exposure_0_2.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_42/cider_verified_exposure_0_2",
+    "run_type": "ablation",
+    "seed": 42,
+    "variant": "cider_verified_exposure_0_2"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_42/cider_sota_exposure_0_35.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_42/cider_sota_exposure_0_35",
+    "run_type": "ablation",
+    "seed": 42,
+    "variant": "cider_sota_exposure_0_35"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_42/cider_verified_exposure_0_35.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_42/cider_verified_exposure_0_35",
+    "run_type": "ablation",
+    "seed": 42,
+    "variant": "cider_verified_exposure_0_35"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_42/cider_sota_exposure_0_5.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_42/cider_sota_exposure_0_5",
+    "run_type": "ablation",
+    "seed": 42,
+    "variant": "cider_sota_exposure_0_5"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_42/cider_verified_exposure_0_5.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_42/cider_verified_exposure_0_5",
+    "run_type": "ablation",
+    "seed": 42,
+    "variant": "cider_verified_exposure_0_5"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_42/cider_sota_exposure_1_0.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_42/cider_sota_exposure_1_0",
+    "run_type": "ablation",
+    "seed": 42,
+    "variant": "cider_sota_exposure_1_0"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_42/cider_verified_exposure_1_0.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_42/cider_verified_exposure_1_0",
+    "run_type": "ablation",
+    "seed": 42,
+    "variant": "cider_verified_exposure_1_0"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_42/cider_sota_verifier_off.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_42/cider_sota_verifier_off",
+    "run_type": "ablation",
+    "seed": 42,
+    "variant": "cider_sota_verifier_off"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_42/cider_verified_verifier_off.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_42/cider_verified_verifier_off",
+    "run_type": "ablation",
+    "seed": 42,
+    "variant": "cider_verified_verifier_off"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_42/cider_sota_no_copy_penalty.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_42/cider_sota_no_copy_penalty",
+    "run_type": "ablation",
+    "seed": 42,
+    "variant": "cider_sota_no_copy_penalty"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_42/cider_verified_no_copy_penalty.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_42/cider_verified_no_copy_penalty",
+    "run_type": "ablation",
+    "seed": 42,
+    "variant": "cider_verified_no_copy_penalty"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_42/cider_sota_no_correction_bonus.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_42/cider_sota_no_correction_bonus",
+    "run_type": "ablation",
+    "seed": 42,
+    "variant": "cider_sota_no_correction_bonus"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_42/cider_verified_no_correction_bonus.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_42/cider_verified_no_correction_bonus",
+    "run_type": "ablation",
+    "seed": 42,
+    "variant": "cider_verified_no_correction_bonus"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_42/cider_sota_no_exposure_penalty.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_42/cider_sota_no_exposure_penalty",
+    "run_type": "ablation",
+    "seed": 42,
+    "variant": "cider_sota_no_exposure_penalty"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_42/cider_verified_no_exposure_penalty.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_42/cider_verified_no_exposure_penalty",
+    "run_type": "ablation",
+    "seed": 42,
+    "variant": "cider_verified_no_exposure_penalty"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_43/cider_sota_exposure_0_0.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_43/cider_sota_exposure_0_0",
+    "run_type": "ablation",
+    "seed": 43,
+    "variant": "cider_sota_exposure_0_0"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_43/cider_verified_exposure_0_0.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_43/cider_verified_exposure_0_0",
+    "run_type": "ablation",
+    "seed": 43,
+    "variant": "cider_verified_exposure_0_0"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_43/cider_sota_exposure_0_2.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_43/cider_sota_exposure_0_2",
+    "run_type": "ablation",
+    "seed": 43,
+    "variant": "cider_sota_exposure_0_2"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_43/cider_verified_exposure_0_2.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_43/cider_verified_exposure_0_2",
+    "run_type": "ablation",
+    "seed": 43,
+    "variant": "cider_verified_exposure_0_2"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_43/cider_sota_exposure_0_35.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_43/cider_sota_exposure_0_35",
+    "run_type": "ablation",
+    "seed": 43,
+    "variant": "cider_sota_exposure_0_35"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_43/cider_verified_exposure_0_35.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_43/cider_verified_exposure_0_35",
+    "run_type": "ablation",
+    "seed": 43,
+    "variant": "cider_verified_exposure_0_35"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_43/cider_sota_exposure_0_5.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_43/cider_sota_exposure_0_5",
+    "run_type": "ablation",
+    "seed": 43,
+    "variant": "cider_sota_exposure_0_5"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_43/cider_verified_exposure_0_5.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_43/cider_verified_exposure_0_5",
+    "run_type": "ablation",
+    "seed": 43,
+    "variant": "cider_verified_exposure_0_5"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_43/cider_sota_exposure_1_0.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_43/cider_sota_exposure_1_0",
+    "run_type": "ablation",
+    "seed": 43,
+    "variant": "cider_sota_exposure_1_0"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_43/cider_verified_exposure_1_0.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_43/cider_verified_exposure_1_0",
+    "run_type": "ablation",
+    "seed": 43,
+    "variant": "cider_verified_exposure_1_0"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_43/cider_sota_verifier_off.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_43/cider_sota_verifier_off",
+    "run_type": "ablation",
+    "seed": 43,
+    "variant": "cider_sota_verifier_off"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_43/cider_verified_verifier_off.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_43/cider_verified_verifier_off",
+    "run_type": "ablation",
+    "seed": 43,
+    "variant": "cider_verified_verifier_off"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_43/cider_sota_no_copy_penalty.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_43/cider_sota_no_copy_penalty",
+    "run_type": "ablation",
+    "seed": 43,
+    "variant": "cider_sota_no_copy_penalty"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_43/cider_verified_no_copy_penalty.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_43/cider_verified_no_copy_penalty",
+    "run_type": "ablation",
+    "seed": 43,
+    "variant": "cider_verified_no_copy_penalty"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_43/cider_sota_no_correction_bonus.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_43/cider_sota_no_correction_bonus",
+    "run_type": "ablation",
+    "seed": 43,
+    "variant": "cider_sota_no_correction_bonus"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_43/cider_verified_no_correction_bonus.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_43/cider_verified_no_correction_bonus",
+    "run_type": "ablation",
+    "seed": 43,
+    "variant": "cider_verified_no_correction_bonus"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_43/cider_sota_no_exposure_penalty.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_43/cider_sota_no_exposure_penalty",
+    "run_type": "ablation",
+    "seed": 43,
+    "variant": "cider_sota_no_exposure_penalty"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_43/cider_verified_no_exposure_penalty.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_43/cider_verified_no_exposure_penalty",
+    "run_type": "ablation",
+    "seed": 43,
+    "variant": "cider_verified_no_exposure_penalty"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_44/cider_sota_exposure_0_0.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_44/cider_sota_exposure_0_0",
+    "run_type": "ablation",
+    "seed": 44,
+    "variant": "cider_sota_exposure_0_0"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_44/cider_verified_exposure_0_0.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_44/cider_verified_exposure_0_0",
+    "run_type": "ablation",
+    "seed": 44,
+    "variant": "cider_verified_exposure_0_0"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_44/cider_sota_exposure_0_2.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_44/cider_sota_exposure_0_2",
+    "run_type": "ablation",
+    "seed": 44,
+    "variant": "cider_sota_exposure_0_2"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_44/cider_verified_exposure_0_2.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_44/cider_verified_exposure_0_2",
+    "run_type": "ablation",
+    "seed": 44,
+    "variant": "cider_verified_exposure_0_2"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_44/cider_sota_exposure_0_35.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_44/cider_sota_exposure_0_35",
+    "run_type": "ablation",
+    "seed": 44,
+    "variant": "cider_sota_exposure_0_35"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_44/cider_verified_exposure_0_35.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_44/cider_verified_exposure_0_35",
+    "run_type": "ablation",
+    "seed": 44,
+    "variant": "cider_verified_exposure_0_35"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_44/cider_sota_exposure_0_5.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_44/cider_sota_exposure_0_5",
+    "run_type": "ablation",
+    "seed": 44,
+    "variant": "cider_sota_exposure_0_5"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_44/cider_verified_exposure_0_5.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_44/cider_verified_exposure_0_5",
+    "run_type": "ablation",
+    "seed": 44,
+    "variant": "cider_verified_exposure_0_5"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_44/cider_sota_exposure_1_0.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_44/cider_sota_exposure_1_0",
+    "run_type": "ablation",
+    "seed": 44,
+    "variant": "cider_sota_exposure_1_0"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_44/cider_verified_exposure_1_0.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_44/cider_verified_exposure_1_0",
+    "run_type": "ablation",
+    "seed": 44,
+    "variant": "cider_verified_exposure_1_0"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_44/cider_sota_verifier_off.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_44/cider_sota_verifier_off",
+    "run_type": "ablation",
+    "seed": 44,
+    "variant": "cider_sota_verifier_off"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_44/cider_verified_verifier_off.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_44/cider_verified_verifier_off",
+    "run_type": "ablation",
+    "seed": 44,
+    "variant": "cider_verified_verifier_off"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_44/cider_sota_no_copy_penalty.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_44/cider_sota_no_copy_penalty",
+    "run_type": "ablation",
+    "seed": 44,
+    "variant": "cider_sota_no_copy_penalty"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_44/cider_verified_no_copy_penalty.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_44/cider_verified_no_copy_penalty",
+    "run_type": "ablation",
+    "seed": 44,
+    "variant": "cider_verified_no_copy_penalty"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_44/cider_sota_no_correction_bonus.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_44/cider_sota_no_correction_bonus",
+    "run_type": "ablation",
+    "seed": 44,
+    "variant": "cider_sota_no_correction_bonus"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_44/cider_verified_no_correction_bonus.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_44/cider_verified_no_correction_bonus",
+    "run_type": "ablation",
+    "seed": 44,
+    "variant": "cider_verified_no_correction_bonus"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_44/cider_sota_no_exposure_penalty.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_44/cider_sota_no_exposure_penalty",
+    "run_type": "ablation",
+    "seed": 44,
+    "variant": "cider_sota_no_exposure_penalty"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_44/cider_verified_no_exposure_penalty.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_44/cider_verified_no_exposure_penalty",
+    "run_type": "ablation",
+    "seed": 44,
+    "variant": "cider_verified_no_exposure_penalty"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_45/cider_sota_exposure_0_0.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_45/cider_sota_exposure_0_0",
+    "run_type": "ablation",
+    "seed": 45,
+    "variant": "cider_sota_exposure_0_0"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_45/cider_verified_exposure_0_0.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_45/cider_verified_exposure_0_0",
+    "run_type": "ablation",
+    "seed": 45,
+    "variant": "cider_verified_exposure_0_0"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_45/cider_sota_exposure_0_2.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_45/cider_sota_exposure_0_2",
+    "run_type": "ablation",
+    "seed": 45,
+    "variant": "cider_sota_exposure_0_2"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_45/cider_verified_exposure_0_2.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_45/cider_verified_exposure_0_2",
+    "run_type": "ablation",
+    "seed": 45,
+    "variant": "cider_verified_exposure_0_2"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_45/cider_sota_exposure_0_35.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_45/cider_sota_exposure_0_35",
+    "run_type": "ablation",
+    "seed": 45,
+    "variant": "cider_sota_exposure_0_35"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_45/cider_verified_exposure_0_35.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_45/cider_verified_exposure_0_35",
+    "run_type": "ablation",
+    "seed": 45,
+    "variant": "cider_verified_exposure_0_35"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_45/cider_sota_exposure_0_5.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_45/cider_sota_exposure_0_5",
+    "run_type": "ablation",
+    "seed": 45,
+    "variant": "cider_sota_exposure_0_5"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_45/cider_verified_exposure_0_5.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_45/cider_verified_exposure_0_5",
+    "run_type": "ablation",
+    "seed": 45,
+    "variant": "cider_verified_exposure_0_5"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_45/cider_sota_exposure_1_0.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_45/cider_sota_exposure_1_0",
+    "run_type": "ablation",
+    "seed": 45,
+    "variant": "cider_sota_exposure_1_0"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_45/cider_verified_exposure_1_0.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_45/cider_verified_exposure_1_0",
+    "run_type": "ablation",
+    "seed": 45,
+    "variant": "cider_verified_exposure_1_0"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_45/cider_sota_verifier_off.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_45/cider_sota_verifier_off",
+    "run_type": "ablation",
+    "seed": 45,
+    "variant": "cider_sota_verifier_off"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_45/cider_verified_verifier_off.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_45/cider_verified_verifier_off",
+    "run_type": "ablation",
+    "seed": 45,
+    "variant": "cider_verified_verifier_off"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_45/cider_sota_no_copy_penalty.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_45/cider_sota_no_copy_penalty",
+    "run_type": "ablation",
+    "seed": 45,
+    "variant": "cider_sota_no_copy_penalty"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_45/cider_verified_no_copy_penalty.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_45/cider_verified_no_copy_penalty",
+    "run_type": "ablation",
+    "seed": 45,
+    "variant": "cider_verified_no_copy_penalty"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_45/cider_sota_no_correction_bonus.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_45/cider_sota_no_correction_bonus",
+    "run_type": "ablation",
+    "seed": 45,
+    "variant": "cider_sota_no_correction_bonus"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_45/cider_verified_no_correction_bonus.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_45/cider_verified_no_correction_bonus",
+    "run_type": "ablation",
+    "seed": 45,
+    "variant": "cider_verified_no_correction_bonus"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_45/cider_sota_no_exposure_penalty.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_45/cider_sota_no_exposure_penalty",
+    "run_type": "ablation",
+    "seed": 45,
+    "variant": "cider_sota_no_exposure_penalty"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_45/cider_verified_no_exposure_penalty.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_45/cider_verified_no_exposure_penalty",
+    "run_type": "ablation",
+    "seed": 45,
+    "variant": "cider_verified_no_exposure_penalty"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_46/cider_sota_exposure_0_0.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_46/cider_sota_exposure_0_0",
+    "run_type": "ablation",
+    "seed": 46,
+    "variant": "cider_sota_exposure_0_0"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_46/cider_verified_exposure_0_0.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_46/cider_verified_exposure_0_0",
+    "run_type": "ablation",
+    "seed": 46,
+    "variant": "cider_verified_exposure_0_0"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_46/cider_sota_exposure_0_2.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_46/cider_sota_exposure_0_2",
+    "run_type": "ablation",
+    "seed": 46,
+    "variant": "cider_sota_exposure_0_2"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_46/cider_verified_exposure_0_2.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_46/cider_verified_exposure_0_2",
+    "run_type": "ablation",
+    "seed": 46,
+    "variant": "cider_verified_exposure_0_2"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_46/cider_sota_exposure_0_35.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_46/cider_sota_exposure_0_35",
+    "run_type": "ablation",
+    "seed": 46,
+    "variant": "cider_sota_exposure_0_35"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_46/cider_verified_exposure_0_35.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_46/cider_verified_exposure_0_35",
+    "run_type": "ablation",
+    "seed": 46,
+    "variant": "cider_verified_exposure_0_35"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_46/cider_sota_exposure_0_5.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_46/cider_sota_exposure_0_5",
+    "run_type": "ablation",
+    "seed": 46,
+    "variant": "cider_sota_exposure_0_5"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_46/cider_verified_exposure_0_5.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_46/cider_verified_exposure_0_5",
+    "run_type": "ablation",
+    "seed": 46,
+    "variant": "cider_verified_exposure_0_5"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_46/cider_sota_exposure_1_0.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_46/cider_sota_exposure_1_0",
+    "run_type": "ablation",
+    "seed": 46,
+    "variant": "cider_sota_exposure_1_0"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_46/cider_verified_exposure_1_0.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_46/cider_verified_exposure_1_0",
+    "run_type": "ablation",
+    "seed": 46,
+    "variant": "cider_verified_exposure_1_0"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_46/cider_sota_verifier_off.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_46/cider_sota_verifier_off",
+    "run_type": "ablation",
+    "seed": 46,
+    "variant": "cider_sota_verifier_off"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_46/cider_verified_verifier_off.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_46/cider_verified_verifier_off",
+    "run_type": "ablation",
+    "seed": 46,
+    "variant": "cider_verified_verifier_off"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_46/cider_sota_no_copy_penalty.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_46/cider_sota_no_copy_penalty",
+    "run_type": "ablation",
+    "seed": 46,
+    "variant": "cider_sota_no_copy_penalty"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_46/cider_verified_no_copy_penalty.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_46/cider_verified_no_copy_penalty",
+    "run_type": "ablation",
+    "seed": 46,
+    "variant": "cider_verified_no_copy_penalty"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_46/cider_sota_no_correction_bonus.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_46/cider_sota_no_correction_bonus",
+    "run_type": "ablation",
+    "seed": 46,
+    "variant": "cider_sota_no_correction_bonus"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_46/cider_verified_no_correction_bonus.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_46/cider_verified_no_correction_bonus",
+    "run_type": "ablation",
+    "seed": 46,
+    "variant": "cider_verified_no_correction_bonus"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_46/cider_sota_no_exposure_penalty.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_46/cider_sota_no_exposure_penalty",
+    "run_type": "ablation",
+    "seed": 46,
+    "variant": "cider_sota_no_exposure_penalty"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/ablations/mistral_latest/seed_46/cider_verified_no_exposure_penalty.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/ablations/mistral_latest/seed_46/cider_verified_no_exposure_penalty",
+    "run_type": "ablation",
+    "seed": 46,
+    "variant": "cider_verified_no_exposure_penalty"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/token_sensitivity/mistral_latest/tokens_64.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/token_sensitivity/mistral_latest/tokens_64",
+    "run_type": "token_sensitivity",
+    "seed": 42,
+    "variant": "max_tokens_64"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/token_sensitivity/mistral_latest/tokens_512.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/token_sensitivity/mistral_latest/tokens_512",
+    "run_type": "token_sensitivity",
+    "seed": 42,
+    "variant": "max_tokens_512"
+  },
+  {
+    "adversarial": false,
+    "config": "outputs/a100_full_v10/configs/token_sensitivity/mistral_latest/tokens_1024.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/token_sensitivity/mistral_latest/tokens_1024",
+    "run_type": "token_sensitivity",
+    "seed": 42,
+    "variant": "max_tokens_1024"
+  },
+  {
+    "adversarial": true,
+    "config": "outputs/a100_full_v10/configs/adversarial/mistral_latest/seed_42.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/adversarial/mistral_latest/seed_42",
+    "run_type": "adversarial",
+    "seed": 42,
+    "variant": "two_confident_wrong_agents"
+  },
+  {
+    "adversarial": true,
+    "config": "outputs/a100_full_v10/configs/adversarial/mistral_latest/seed_43.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/adversarial/mistral_latest/seed_43",
+    "run_type": "adversarial",
+    "seed": 43,
+    "variant": "two_confident_wrong_agents"
+  },
+  {
+    "adversarial": true,
+    "config": "outputs/a100_full_v10/configs/adversarial/mistral_latest/seed_44.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/adversarial/mistral_latest/seed_44",
+    "run_type": "adversarial",
+    "seed": 44,
+    "variant": "two_confident_wrong_agents"
+  },
+  {
+    "adversarial": true,
+    "config": "outputs/a100_full_v10/configs/adversarial/mistral_latest/seed_45.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/adversarial/mistral_latest/seed_45",
+    "run_type": "adversarial",
+    "seed": 45,
+    "variant": "two_confident_wrong_agents"
+  },
+  {
+    "adversarial": true,
+    "config": "outputs/a100_full_v10/configs/adversarial/mistral_latest/seed_46.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/a100_full_v10/adversarial/mistral_latest/seed_46",
+    "run_type": "adversarial",
+    "seed": 46,
+    "variant": "two_confident_wrong_agents"
+  },
+  {
+    "adversarial": true,
+    "config": "outputs/a100_full_v10/configs/adversarial/qwen3_32b/seed_42.yaml",
+    "model": "qwen3:32b",
+    "output_dir": "outputs/a100_full_v10/adversarial/qwen3_32b/seed_42",
+    "run_type": "adversarial",
+    "seed": 42,
+    "variant": "two_confident_wrong_agents"
+  },
+  {
+    "adversarial": true,
+    "config": "outputs/a100_full_v10/configs/adversarial/qwen3_32b/seed_43.yaml",
+    "model": "qwen3:32b",
+    "output_dir": "outputs/a100_full_v10/adversarial/qwen3_32b/seed_43",
+    "run_type": "adversarial",
+    "seed": 43,
+    "variant": "two_confident_wrong_agents"
+  },
+  {
+    "adversarial": true,
+    "config": "outputs/a100_full_v10/configs/adversarial/qwen3_32b/seed_44.yaml",
+    "model": "qwen3:32b",
+    "output_dir": "outputs/a100_full_v10/adversarial/qwen3_32b/seed_44",
+    "run_type": "adversarial",
+    "seed": 44,
+    "variant": "two_confident_wrong_agents"
+  },
+  {
+    "adversarial": true,
+    "config": "outputs/a100_full_v10/configs/adversarial/qwen3_32b/seed_45.yaml",
+    "model": "qwen3:32b",
+    "output_dir": "outputs/a100_full_v10/adversarial/qwen3_32b/seed_45",
+    "run_type": "adversarial",
+    "seed": 45,
+    "variant": "two_confident_wrong_agents"
+  },
+  {
+    "adversarial": true,
+    "config": "outputs/a100_full_v10/configs/adversarial/qwen3_32b/seed_46.yaml",
+    "model": "qwen3:32b",
+    "output_dir": "outputs/a100_full_v10/adversarial/qwen3_32b/seed_46",
+    "run_type": "adversarial",
+    "seed": 46,
+    "variant": "two_confident_wrong_agents"
+  },
+  {
+    "adversarial": true,
+    "config": "outputs/a100_full_v10/configs/adversarial/qwen2_5_32b/seed_42.yaml",
+    "model": "qwen2.5:32b",
+    "output_dir": "outputs/a100_full_v10/adversarial/qwen2_5_32b/seed_42",
+    "run_type": "adversarial",
+    "seed": 42,
+    "variant": "two_confident_wrong_agents"
+  },
+  {
+    "adversarial": true,
+    "config": "outputs/a100_full_v10/configs/adversarial/qwen2_5_32b/seed_43.yaml",
+    "model": "qwen2.5:32b",
+    "output_dir": "outputs/a100_full_v10/adversarial/qwen2_5_32b/seed_43",
+    "run_type": "adversarial",
+    "seed": 43,
+    "variant": "two_confident_wrong_agents"
+  },
+  {
+    "adversarial": true,
+    "config": "outputs/a100_full_v10/configs/adversarial/qwen2_5_32b/seed_44.yaml",
+    "model": "qwen2.5:32b",
+    "output_dir": "outputs/a100_full_v10/adversarial/qwen2_5_32b/seed_44",
+    "run_type": "adversarial",
+    "seed": 44,
+    "variant": "two_confident_wrong_agents"
+  },
+  {
+    "adversarial": true,
+    "config": "outputs/a100_full_v10/configs/adversarial/qwen2_5_32b/seed_45.yaml",
+    "model": "qwen2.5:32b",
+    "output_dir": "outputs/a100_full_v10/adversarial/qwen2_5_32b/seed_45",
+    "run_type": "adversarial",
+    "seed": 45,
+    "variant": "two_confident_wrong_agents"
+  },
+  {
+    "adversarial": true,
+    "config": "outputs/a100_full_v10/configs/adversarial/qwen2_5_32b/seed_46.yaml",
+    "model": "qwen2.5:32b",
+    "output_dir": "outputs/a100_full_v10/adversarial/qwen2_5_32b/seed_46",
+    "run_type": "adversarial",
+    "seed": 46,
+    "variant": "two_confident_wrong_agents"
+  },
+  {
+    "adversarial": true,
+    "config": "outputs/a100_full_v10/configs/adversarial/llama3_1_70b/seed_42.yaml",
+    "model": "llama3.1:70b",
+    "output_dir": "outputs/a100_full_v10/adversarial/llama3_1_70b/seed_42",
+    "run_type": "adversarial",
+    "seed": 42,
+    "variant": "two_confident_wrong_agents"
+  },
+  {
+    "adversarial": true,
+    "config": "outputs/a100_full_v10/configs/adversarial/llama3_1_70b/seed_43.yaml",
+    "model": "llama3.1:70b",
+    "output_dir": "outputs/a100_full_v10/adversarial/llama3_1_70b/seed_43",
+    "run_type": "adversarial",
+    "seed": 43,
+    "variant": "two_confident_wrong_agents"
+  },
+  {
+    "adversarial": true,
+    "config": "outputs/a100_full_v10/configs/adversarial/llama3_1_70b/seed_44.yaml",
+    "model": "llama3.1:70b",
+    "output_dir": "outputs/a100_full_v10/adversarial/llama3_1_70b/seed_44",
+    "run_type": "adversarial",
+    "seed": 44,
+    "variant": "two_confident_wrong_agents"
+  },
+  {
+    "adversarial": true,
+    "config": "outputs/a100_full_v10/configs/adversarial/llama3_1_70b/seed_45.yaml",
+    "model": "llama3.1:70b",
+    "output_dir": "outputs/a100_full_v10/adversarial/llama3_1_70b/seed_45",
+    "run_type": "adversarial",
+    "seed": 45,
+    "variant": "two_confident_wrong_agents"
+  },
+  {
+    "adversarial": true,
+    "config": "outputs/a100_full_v10/configs/adversarial/llama3_1_70b/seed_46.yaml",
+    "model": "llama3.1:70b",
+    "output_dir": "outputs/a100_full_v10/adversarial/llama3_1_70b/seed_46",
+    "run_type": "adversarial",
+    "seed": 46,
+    "variant": "two_confident_wrong_agents"
+  }
+]
