@@ -1,0 +1,4 @@
+outputs/a100_full_v10/**/*.jsonl filter=lfs diff=lfs merge=lfs -text
+outputs/a100_full_v10/**/*.csv filter=lfs diff=lfs merge=lfs -text
+outputs/a100_full_v10/**/*.log filter=lfs diff=lfs merge=lfs -text
+outputs/a100_full_v10/**/*.txt filter=lfs diff=lfs merge=lfs -text

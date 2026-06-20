@@ -30,3 +30,11 @@ external_baselines/official_sources/
 .DS_Store
 *.swp
 *.swo
+
+# Local Python environment and caches
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/

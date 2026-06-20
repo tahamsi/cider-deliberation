@@ -47,35 +47,14 @@ class LLMAgent(BaseAgent):
         if bool(self.config.get("cache", True)) and cache_key in self._CACHE:
             data = self._CACHE[cache_key]
         else:
-            attempts = int(self.config.get("request_retries", 3))
-            last_exc = None
-            for attempt in range(1, attempts + 1):
-                try:
-                    print(
-                        f"[ollama_call] model={self.model_name} mode={mode} "
-                        f"attempt={attempt}/{attempts} timeout={timeout}s "
-                        f"max_tokens={self.config.get('max_tokens')} num_ctx={self.config.get('num_ctx')}",
-                        flush=True,
-                    )
-                    response = requests.post(url, json=payload, timeout=(30, timeout))
-                    response.raise_for_status()
-                    data = response.json()
-                    if bool(self.config.get("cache", True)):
-                        self._CACHE[cache_key] = data
-                    break
-                except Exception as exc:
-                    last_exc = exc
-                    print(
-                        f"[ollama_error] model={self.model_name} mode={mode} "
-                        f"attempt={attempt}/{attempts}: {type(exc).__name__}: {exc}",
-                        flush=True,
-                    )
-                    if attempt < attempts:
-                        time.sleep(5 * attempt)
-            else:
-                raise RuntimeError(
-                    f"Ollama request failed after {attempts} attempts for {self.model_name}: {last_exc}"
-                ) from last_exc
+            try:
+                response = requests.post(url, json=payload, timeout=(30, timeout))
+                response.raise_for_status()
+                data = response.json()
+                if bool(self.config.get("cache", True)):
+                    self._CACHE[cache_key] = data
+            except Exception as exc:
+                raise RuntimeError(f"Ollama request failed for {self.model_name}: {exc}") from exc
         text = str(data.get("response", "")).strip()
         answer, answer_index = self._parse_answer(text, task)
         prompt_tokens = int(data.get("prompt_eval_count") or len(prompt.split()))
