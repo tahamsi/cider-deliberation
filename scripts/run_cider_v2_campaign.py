@@ -93,8 +93,19 @@ def method_params(args: argparse.Namespace) -> dict[str, Any]:
         "v2_max_visible_messages": args.max_visible_messages,
         "v2_use_verifier": True,
         "v2_verifier_required_for_switch": True,
+        "v2_gate_mode": args.gate_mode,
         "v2_min_evidence_gain": args.min_evidence_gain,
+        "v2_soft_evidence_gain": args.soft_evidence_gain,
         "v2_min_confidence_gain": args.min_confidence_gain,
+        "v2_switch_accept_threshold": args.switch_accept_threshold,
+        "v2_weak_initial_confidence": args.weak_initial_confidence,
+        "v2_strong_initial_confidence": args.strong_initial_confidence,
+        "v2_weak_initial_threshold_relief": args.weak_initial_threshold_relief,
+        "v2_peer_threshold_relief": args.peer_threshold_relief,
+        "v2_post_exposure_threshold_relief": args.post_exposure_threshold_relief,
+        "v2_protected_initial_penalty": args.protected_initial_penalty,
+        "v2_verifier_disagreement_penalty": args.verifier_disagreement_penalty,
+        "v2_copy_similarity_threshold": args.copy_similarity_threshold,
         "v2_allow_strong_switch_without_verifier": False,
     }
     if args.weight_file:
@@ -201,8 +212,23 @@ def main() -> None:
     parser.add_argument("--max_examples", type=int, default=None)
     parser.add_argument("--deliberation_threshold", type=float, default=0.20)
     parser.add_argument("--max_visible_messages", type=int, default=2)
+    parser.add_argument(
+        "--gate_mode",
+        choices=["selective", "strict"],
+        default="selective",
+    )
     parser.add_argument("--min_evidence_gain", type=float, default=0.25)
+    parser.add_argument("--soft_evidence_gain", type=float, default=0.10)
     parser.add_argument("--min_confidence_gain", type=float, default=0.05)
+    parser.add_argument("--switch_accept_threshold", type=float, default=0.52)
+    parser.add_argument("--weak_initial_confidence", type=float, default=0.62)
+    parser.add_argument("--strong_initial_confidence", type=float, default=0.82)
+    parser.add_argument("--weak_initial_threshold_relief", type=float, default=0.08)
+    parser.add_argument("--peer_threshold_relief", type=float, default=0.08)
+    parser.add_argument("--post_exposure_threshold_relief", type=float, default=0.04)
+    parser.add_argument("--protected_initial_penalty", type=float, default=0.14)
+    parser.add_argument("--verifier_disagreement_penalty", type=float, default=0.10)
+    parser.add_argument("--copy_similarity_threshold", type=float, default=0.72)
     parser.add_argument("--attackers", default="1,2,3")
     parser.add_argument("--attack_confidences", default="0.6,0.8,0.95")
     parser.add_argument(
@@ -247,7 +273,27 @@ def main() -> None:
 
     elif args.stage == "mechanisms":
         variants = {
-            "default": {},
+            "selective_default": {},
+            "legacy_strict_gate": {"v2_gate_mode": "strict"},
+            "selective_relaxed": {
+                "v2_switch_accept_threshold": 0.46,
+                "v2_weak_initial_threshold_relief": 0.10,
+                "v2_peer_threshold_relief": 0.10,
+            },
+            "selective_conservative": {
+                "v2_switch_accept_threshold": 0.60,
+                "v2_protected_initial_penalty": 0.18,
+            },
+            "selective_no_weak_initial_relief": {
+                "v2_weak_initial_threshold_relief": 0.0,
+            },
+            "selective_no_peer_relief": {
+                "v2_peer_threshold_relief": 0.0,
+                "v2_post_exposure_threshold_relief": 0.0,
+            },
+            "selective_no_initial_protection": {
+                "v2_protected_initial_penalty": 0.0,
+            },
             "full_deliberation": {"v2_force_deliberation": True},
             "gate_off": {"v2_disable_gate": True},
             "verifier_off": {

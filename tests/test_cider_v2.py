@@ -40,6 +40,20 @@ class ScriptedAgent(BaseAgent):
         )
 
 
+def _dummy_agents(n: int = 4) -> list[ScriptedAgent]:
+    """Provide valid inert agents for tests that call internal helpers directly."""
+    return [
+        ScriptedAgent(
+            name=f"dummy_{index}",
+            independent_answer="A",
+            final_answer="A",
+            verifier_answer="A",
+            persona="general_solver",
+        )
+        for index in range(n)
+    ]
+
+
 def task() -> TaskExample:
     return TaskExample(
         dataset="unit",
@@ -98,3 +112,240 @@ def test_build_agents_supports_heterogeneous_model_pool():
         "model-a",
         "model-b",
     ]
+
+def _record(
+    agent: str,
+    answer: str,
+    confidence: float,
+    rationale: str,
+    *,
+    visible: list[int] | None = None,
+):
+    return {
+        "agent": agent,
+        "answer": answer,
+        "answer_index": ord(answer) - ord("A"),
+        "confidence": confidence,
+        "rationale": rationale,
+        "visible_prior_messages": list(visible or []),
+        "metadata": {"persona": "general_solver", "model_name": "scripted"},
+    }
+
+
+def test_selective_gate_accepts_corroborated_recovery(monkeypatch):
+    method = CiderAdaptiveGated(
+        _dummy_agents(4),
+        seed=1,
+        num_agents=4,
+        v2_gate_mode="selective",
+    )
+    monkeypatch.setattr(method, "_evidence_improvement", lambda *_: 0.18)
+    monkeypatch.setattr(method, "_answer_validity", lambda *_: 1.0)
+    monkeypatch.setattr(
+        method,
+        "_rationale_quality",
+        lambda rec: 0.35 if rec["answer"] == "A" else 0.78,
+    )
+    monkeypatch.setattr(method, "_deterministic_numeric_check", lambda *_: None)
+
+    independent = [
+        _record("a0", "A", 0.35, "uncertain initial guess"),
+        _record("a1", "B", 0.78, "independent derivation one"),
+        _record("a2", "B", 0.74, "independent derivation two"),
+        _record("a3", "B", 0.72, "independent derivation three"),
+    ]
+    proposals = [
+        _record("a0", "B", 0.58, "corrected after locating the error"),
+        _record("a1", "B", 0.80, "stable"),
+        _record("a2", "B", 0.76, "stable"),
+        _record("a3", "B", 0.73, "stable"),
+    ]
+    decision = method._gate_switch(
+        task(),
+        independent[0],
+        proposals[0],
+        independent + proposals,
+        ("B", 1),
+        agent_index=0,
+        independent=independent,
+        proposals=proposals,
+    )
+
+    assert decision["accepted"] is True
+    assert decision["reason"] in {
+        "corroborated_recovery",
+        "peer_confirmed_correction",
+        "selective_score",
+    }
+    assert decision["acceptance_weight"] >= 0.78
+    assert decision["proposal_independent_peer_support"] == 3
+
+
+def test_selective_gate_protects_strong_supported_initial(monkeypatch):
+    method = CiderAdaptiveGated(
+        _dummy_agents(4),
+        seed=1,
+        num_agents=4,
+        v2_gate_mode="selective",
+    )
+    monkeypatch.setattr(method, "_evidence_improvement", lambda *_: 0.18)
+    monkeypatch.setattr(method, "_answer_validity", lambda *_: 1.0)
+    monkeypatch.setattr(method, "_rationale_quality", lambda *_: 0.80)
+    monkeypatch.setattr(method, "_deterministic_numeric_check", lambda *_: None)
+
+    independent = [
+        _record("a0", "A", 0.95, "strong independent derivation"),
+        _record("a1", "A", 0.91, "separate supporting derivation"),
+        _record("a2", "A", 0.88, "third supporting derivation"),
+        _record("a3", "B", 0.70, "minority view"),
+    ]
+    proposals = [
+        _record("a0", "B", 0.70, "tentative revision"),
+        _record("a1", "A", 0.90, "stable"),
+        _record("a2", "A", 0.87, "stable"),
+        _record("a3", "B", 0.72, "stable"),
+    ]
+    decision = method._gate_switch(
+        task(),
+        independent[0],
+        proposals[0],
+        independent + proposals,
+        ("B", 1),
+        agent_index=0,
+        independent=independent,
+        proposals=proposals,
+    )
+
+    assert decision["protected_initial"] is True
+    assert decision["accepted"] is False
+    assert decision["reason"] == "protected_initial"
+
+
+
+def test_selective_gate_keeps_unsupported_copy_veto(monkeypatch):
+    method = CiderAdaptiveGated(
+        _dummy_agents(4),
+        seed=1,
+        num_agents=4,
+        v2_gate_mode="selective",
+    )
+    monkeypatch.setattr(method, "_evidence_improvement", lambda *_: 0.02)
+    monkeypatch.setattr(method, "_answer_validity", lambda *_: 1.0)
+    monkeypatch.setattr(method, "_rationale_quality", lambda *_: 0.60)
+    monkeypatch.setattr(method, "_deterministic_numeric_check", lambda *_: None)
+
+    # No independent or post-exposure peer supports B.
+    independent = [
+        _record("a0", "A", 0.60, "original reasoning"),
+        _record("a1", "C", 0.60, "different independent view"),
+        _record("a2", "D", 0.60, "another independent view"),
+        _record("a3", "E", 0.60, "final independent view"),
+    ]
+
+    proposals = [
+        _record(
+            "a0",
+            "B",
+            0.61,
+            "copied phrase with exact structure",
+            visible=[1],
+        ),
+        _record("a1", "C", 0.60, "stable"),
+        _record("a2", "D", 0.60, "stable"),
+        _record("a3", "E", 0.60, "stable"),
+    ]
+
+    # The only visible B record is an exposed message, not independent
+    # corroboration from another agent.
+    visible_copy = _record(
+        "visible_source",
+        "B",
+        0.95,
+        "copied phrase with exact structure",
+    )
+    transcript = [
+        independent[0],
+        visible_copy,
+        *independent[1:],
+        *proposals,
+    ]
+
+    decision = method._gate_switch(
+        task(),
+        independent[0],
+        proposals[0],
+        transcript,
+        ("A", 0),
+        agent_index=0,
+        independent=independent,
+        proposals=proposals,
+    )
+
+    assert decision["copied_visible_majority"] is True
+    assert decision["copy_similarity"] >= 0.99
+    assert decision["proposal_independent_peer_support"] == 0
+    assert decision["proposal_post_exposure_peer_support"] == 0
+    assert decision["unsupported_copy"] is True
+    assert decision["accepted"] is False
+    assert decision["reason"] == "unsupported_copy"
+
+
+def test_candidate_features_fractionally_weight_accepted_correction(monkeypatch):
+    method = CiderAdaptiveGated(_dummy_agents(1), seed=1, num_agents=1)
+    monkeypatch.setattr(method, "_answer_validity", lambda *_: 1.0)
+    monkeypatch.setattr(method, "_rationale_quality", lambda *_: 1.0)
+    monkeypatch.setattr(method, "_role_weight", lambda *_: 1.0)
+
+    independent = [_record("a0", "A", 0.80, "initial")]
+    final = [_record("a0", "B", 0.80, "correction")]
+    decisions = [
+        {
+            "accepted": True,
+            "acceptance_weight": 0.60,
+            "proposed_answer": "B",
+            "proposed_answer_index": 1,
+            "unsupported_copy": False,
+        }
+    ]
+    rows = method._candidate_features(
+        task=task(),
+        independent=independent,
+        final=final,
+        proposals=final,
+        decisions=decisions,
+        verifier_record=None,
+    )
+    b_row = next(row for row in rows if row["answer"] == "B")
+    assert b_row["features"]["accepted_correction_support"] == 0.48
+
+
+def test_gate_summary_reports_acceptance_distribution():
+    method = CiderAdaptiveGated(_dummy_agents(1), seed=1, num_agents=1)
+    summary = method._gate_summary(
+        [
+            {"switched": False, "accepted": True, "reason": "stable"},
+            {
+                "switched": True,
+                "accepted": True,
+                "reason": "corroborated_recovery",
+                "acceptance_score": 0.60,
+                "acceptance_threshold": 0.40,
+                "acceptance_weight": 0.80,
+            },
+            {
+                "switched": True,
+                "accepted": False,
+                "reason": "unsupported_copy",
+                "acceptance_score": 0.10,
+                "acceptance_threshold": 0.50,
+                "acceptance_weight": 0.0,
+            },
+        ]
+    )
+    assert summary["switches_proposed"] == 2
+    assert summary["switches_accepted"] == 1
+    assert summary["switch_acceptance_rate"] == 0.5
+    assert summary["reasons"] == {
+        "corroborated_recovery": 1,
+        "unsupported_copy": 1,
+    }
