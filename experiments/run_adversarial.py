@@ -18,11 +18,14 @@ def main() -> None:
     parser.add_argument("--config", required=True)
     parser.add_argument("--max_examples", type=int, default=None)
     args = parser.parse_args()
+
     cfg = yaml.safe_load(Path(args.config).read_text(encoding="utf-8"))
     original = run_benchmark.build_agents
     adversarial_params = cfg.get("adversarial", {})
     num_adversaries = int(adversarial_params.get("num_adversaries", 1))
     wrong_confidence = float(adversarial_params.get("wrong_confidence", 0.9))
+    attack_style = str(adversarial_params.get("attack_style", "fixed"))
+    coordination_seed = int(adversarial_params.get("coordination_seed", 9001))
 
     def build_with_adversary(config, seed, n):
         honest_n = max(n - num_adversaries, 1)
@@ -34,6 +37,8 @@ def main() -> None:
                     "deterministic-adversary",
                     seed + 999 + i,
                     wrong_confidence=wrong_confidence,
+                    attack_style=attack_style,
+                    coordination_seed=coordination_seed,
                 )
             )
         return agents

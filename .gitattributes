@@ -3,3 +3,7 @@ outputs/a100_full_v10/**/*.csv filter=lfs diff=lfs merge=lfs -text
 outputs/a100_full_v10/**/*.log filter=lfs diff=lfs merge=lfs -text
 outputs/a100_full_v10/**/*.txt filter=lfs diff=lfs merge=lfs -text
 outputs/a100_full_v10/a100_campaign_results.csv -filter -diff -merge text
+
+# Compact CIDeR-v2 development results remain normal Git files
+outputs/cider_v2_dev/dev/campaign_results.csv -filter -diff -merge text
+outputs/cider_v2_dev/dev/manifest.json -filter -diff -merge text
