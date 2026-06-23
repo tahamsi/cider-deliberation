@@ -2,6 +2,7 @@ from methods.adaptive_stability import AdaptiveStabilityDetection
 from methods.agentauditor_style import AgentAuditorStyle
 from methods.c3_style import C3StyleCausalCreditAnalysis
 from methods.cider import CiderFull, CiderFullTuned, CiderSOTA, CiderVerified
+from methods.cider_v2 import CiderAdaptiveGated
 from methods.conformal_social_choice import ConformalSocialChoice
 from methods.consensagent_style import ConsensAgentStyle
 from methods.dar_style import DARStyleDiversityAwareRetention
@@ -28,6 +29,7 @@ METHODS = {
     "cider_full_tuned": CiderFullTuned,
     "cider_verified": CiderVerified,
     "cider_sota": CiderSOTA,
+    "cider_adaptive_gated": CiderAdaptiveGated,
     "free_mad_official_adapter": FreeMADOfficialAdapter,
     "dar_official_adapter": DAROfficialAdapter,
 }

@@ -51,7 +51,16 @@ def append_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
 def build_agents(config: dict[str, Any], seed: int, n: int) -> list[BaseAgent]:
     agent_type = config.get("type", "mock")
     cls = MockAgent if agent_type == "mock" else LLMAgent
-    extra = {k: v for k, v in config.items() if k not in {"type", "model_name"}}
+
+    control_keys = {
+        "type",
+        "model_name",
+        "model_names",
+        "personas",
+        "agent_temperatures",
+        "agent_configs",
+    }
+    shared = {key: value for key, value in config.items() if key not in control_keys}
     personas = config.get("personas") or [
         "concise_solver",
         "skeptical_solver",
@@ -60,17 +69,39 @@ def build_agents(config: dict[str, Any], seed: int, n: int) -> list[BaseAgent]:
         "domain_expert",
         "adversarial_reviewer",
     ]
-    temperatures = config.get("agent_temperatures")
+    temperatures = config.get("agent_temperatures") or []
+    model_names = config.get("model_names") or [
+        config.get("model_name", agent_type)
+    ]
+    agent_configs = config.get("agent_configs") or []
+
     agents = []
     for i in range(n):
-        agent_extra = dict(extra)
-        agent_extra["persona"] = personas[i % len(personas)]
-        if temperatures:
-            agent_extra.pop("temperature", None)
-            agent_extra["temperature"] = float(temperatures[i % len(temperatures)])
-        agents.append(cls(name=f"agent_{i}", model_name=config.get("model_name", agent_type), seed=seed + i, **agent_extra))
-    return agents
+        agent_extra = dict(shared)
+        if agent_configs:
+            specific = agent_configs[i % len(agent_configs)]
+            if not isinstance(specific, dict):
+                raise TypeError("Each agent_configs entry must be a mapping")
+            agent_extra.update(specific)
 
+        agent_extra.setdefault("persona", personas[i % len(personas)])
+        if temperatures and "temperature" not in agent_extra:
+            agent_extra["temperature"] = float(
+                temperatures[i % len(temperatures)]
+            )
+
+        model_name = str(
+            agent_extra.pop("model_name", model_names[i % len(model_names)])
+        )
+        agents.append(
+            cls(
+                name=f"agent_{i}",
+                model_name=model_name,
+                seed=seed + i,
+                **agent_extra,
+            )
+        )
+    return agents
 
 def record_for(task: TaskExample, method_name: str, result: Any) -> dict[str, Any]:
     correct = is_correct(result.prediction, task.answer, result.prediction_index, task.answer_index)

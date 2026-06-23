@@ -1,0 +1,34 @@
+[
+  {
+    "config": "outputs/cider_v2_dev/dev/configs/mistral_latest/seed_42.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/cider_v2_dev/dev/mistral_latest/seed_42",
+    "seed": 42,
+    "stage": "dev",
+    "variant": "comparison"
+  },
+  {
+    "config": "outputs/cider_v2_dev/dev/configs/mistral_latest/seed_43.yaml",
+    "model": "mistral:latest",
+    "output_dir": "outputs/cider_v2_dev/dev/mistral_latest/seed_43",
+    "seed": 43,
+    "stage": "dev",
+    "variant": "comparison"
+  },
+  {
+    "config": "outputs/cider_v2_dev/dev/configs/qwen3_32b/seed_42.yaml",
+    "model": "qwen3:32b",
+    "output_dir": "outputs/cider_v2_dev/dev/qwen3_32b/seed_42",
+    "seed": 42,
+    "stage": "dev",
+    "variant": "comparison"
+  },
+  {
+    "config": "outputs/cider_v2_dev/dev/configs/qwen3_32b/seed_43.yaml",
+    "model": "qwen3:32b",
+    "output_dir": "outputs/cider_v2_dev/dev/qwen3_32b/seed_43",
+    "seed": 43,
+    "stage": "dev",
+    "variant": "comparison"
+  }
+]
