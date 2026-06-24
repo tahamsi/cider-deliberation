@@ -572,7 +572,7 @@ class CiderAdaptiveGated(CiderSOTA):
                 + 0.05 * initial_weakness_signal
                 + 0.03 * novelty_signal
             )
-            threshold = float(self.params.get("v2_switch_accept_threshold", 0.52))
+            threshold = float(self.params.get("v2_switch_accept_threshold", 0.60))
             if weak_initial:
                 threshold -= float(
                     self.params.get("v2_weak_initial_threshold_relief", 0.08)
@@ -587,7 +587,7 @@ class CiderAdaptiveGated(CiderSOTA):
                 )
             if protected_initial:
                 threshold += float(
-                    self.params.get("v2_protected_initial_penalty", 0.14)
+                    self.params.get("v2_protected_initial_penalty", 0.18)
                 )
             if verifier_key is None:
                 threshold += float(self.params.get("v2_missing_verifier_penalty", 0.03))

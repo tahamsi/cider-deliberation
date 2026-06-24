@@ -273,16 +273,19 @@ def main() -> None:
 
     elif args.stage == "mechanisms":
         variants = {
+            # Default now uses the conservative settings selected by
+            # the two-seed mechanism validation.
             "selective_default": {},
+            # Preserve the previous v2.1 defaults as an explicit ablation.
+            "selective_balanced": {
+                "v2_switch_accept_threshold": 0.52,
+                "v2_protected_initial_penalty": 0.14,
+            },
             "legacy_strict_gate": {"v2_gate_mode": "strict"},
             "selective_relaxed": {
                 "v2_switch_accept_threshold": 0.46,
                 "v2_weak_initial_threshold_relief": 0.10,
                 "v2_peer_threshold_relief": 0.10,
-            },
-            "selective_conservative": {
-                "v2_switch_accept_threshold": 0.60,
-                "v2_protected_initial_penalty": 0.18,
             },
             "selective_no_weak_initial_relief": {
                 "v2_weak_initial_threshold_relief": 0.0,

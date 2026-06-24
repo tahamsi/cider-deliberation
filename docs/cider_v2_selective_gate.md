@@ -29,14 +29,14 @@ Set `v2_gate_mode: strict` to restore the original CIDeR-v2 gate. The campaign r
 
 | Parameter | Default | Purpose |
 |---|---:|---|
-| `v2_switch_accept_threshold` | 0.52 | Base selective acceptance threshold |
+| `v2_switch_accept_threshold` | 0.60 | Base selective acceptance threshold |
 | `v2_soft_evidence_gain` | 0.10 | Minimum evidence for recovery paths |
 | `v2_weak_initial_confidence` | 0.62 | Defines a weak original answer |
 | `v2_strong_initial_confidence` | 0.82 | Defines a protected original answer |
 | `v2_weak_initial_threshold_relief` | 0.08 | Relaxes the threshold for weak originals |
 | `v2_peer_threshold_relief` | 0.08 | Relaxes the threshold for independent corroboration |
 | `v2_post_exposure_threshold_relief` | 0.04 | Smaller relaxation for post-exposure corroboration |
-| `v2_protected_initial_penalty` | 0.14 | Protects strong, independently supported originals |
+| `v2_protected_initial_penalty` | 0.18 | Protects strong, independently supported originals |
 | `v2_verifier_disagreement_penalty` | 0.10 | Raises the bar when the verifier disagrees |
 | `v2_copy_similarity_threshold` | 0.72 | Activates the unsupported-copy veto |
 
@@ -59,3 +59,14 @@ python scripts/summarize_cider_v2_gate.py outputs/<campaign>
 ```
 
 The summary reports beneficial-switch recall, harmful-switch acceptance, net accepted corrections, reason counts, and gate thresholds.
+
+## Validated default
+
+A two-seed, 100-example-per-seed Mistral mechanism validation selected
+the conservative selective configuration as the production default:
+
+- `v2_switch_accept_threshold: 0.60`
+- `v2_protected_initial_penalty: 0.18`
+
+The previous balanced defaults remain available in mechanism campaigns
+as `selective_balanced`.
