@@ -220,13 +220,13 @@ def main() -> None:
     parser.add_argument("--min_evidence_gain", type=float, default=0.25)
     parser.add_argument("--soft_evidence_gain", type=float, default=0.10)
     parser.add_argument("--min_confidence_gain", type=float, default=0.05)
-    parser.add_argument("--switch_accept_threshold", type=float, default=0.52)
+    parser.add_argument("--switch_accept_threshold", type=float, default=0.60)
     parser.add_argument("--weak_initial_confidence", type=float, default=0.62)
     parser.add_argument("--strong_initial_confidence", type=float, default=0.82)
     parser.add_argument("--weak_initial_threshold_relief", type=float, default=0.08)
     parser.add_argument("--peer_threshold_relief", type=float, default=0.08)
     parser.add_argument("--post_exposure_threshold_relief", type=float, default=0.04)
-    parser.add_argument("--protected_initial_penalty", type=float, default=0.14)
+    parser.add_argument("--protected_initial_penalty", type=float, default=0.18)
     parser.add_argument("--verifier_disagreement_penalty", type=float, default=0.10)
     parser.add_argument("--copy_similarity_threshold", type=float, default=0.72)
     parser.add_argument("--attackers", default="1,2,3")
@@ -244,8 +244,10 @@ def main() -> None:
     config_dir = out_dir / "configs"
     manifest: list[dict[str, Any]] = []
 
-    if args.stage == "confirm" and not args.weight_file:
-        raise SystemExit("--stage confirm requires --weight_file from the frozen dev fit")
+    if args.stage == "confirm" and args.weight_file:
+        weight_path = Path(args.weight_file)
+        if not weight_path.exists():
+            raise SystemExit(f"Frozen weight file does not exist: {weight_path}")
 
     if args.stage in {"dev", "confirm"}:
         for model in models:

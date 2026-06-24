@@ -1,0 +1,67 @@
+{
+  "created_at_utc": "2026-06-24T11:53:17.469261+00:00",
+  "excluded_used_counts": {
+    "gsm8k": 120,
+    "math500": 120,
+    "medmcqa": 120,
+    "medqa": 120,
+    "mmlu_pro": 120,
+    "strategyqa": 120,
+    "truthfulqa_mc": 120
+  },
+  "excluded_used_files": [
+    "data/processed/real_llm_v4_dev.jsonl",
+    "data/processed/real_llm_v4_test_balanced.jsonl",
+    "data/processed/real_llm_v6_mistral_160.jsonl",
+    "data/processed/real_llm_v6_qwen3_32.jsonl"
+  ],
+  "master_seed": 20260624,
+  "name": "CIDeR-v2 confirmatory unseen balanced holdout",
+  "output_file": "data/processed/cider_v2_confirm_unseen.jsonl",
+  "output_sha256": "dd9517df7075e8ebcb96192aef0bf1f3cf7cb3a4bcfc232aa474a03f1ca3b744",
+  "selected_counts": {
+    "gsm8k": 120,
+    "math500": 120,
+    "medmcqa": 120,
+    "medqa": 120,
+    "mmlu_pro": 120,
+    "strategyqa": 120,
+    "truthfulqa_mc": 120
+  },
+  "selection_policy": {
+    "aime2024_excluded_reason": "All 30 source examples appeared in prior development or evaluation splits.",
+    "balanced": true,
+    "examples_per_dataset": 120,
+    "excluded_previously_used_examples": true,
+    "sampling_without_replacement": true
+  },
+  "source_counts": {
+    "gsm8k": 1319,
+    "math500": 500,
+    "medmcqa": 4183,
+    "medqa": 1273,
+    "mmlu_pro": 12032,
+    "strategyqa": 687,
+    "truthfulqa_mc": 684
+  },
+  "source_duplicate_counts": {},
+  "source_files": [
+    "data/processed/gsm8k.jsonl",
+    "data/processed/math500.jsonl",
+    "data/processed/medmcqa.jsonl",
+    "data/processed/medqa.jsonl",
+    "data/processed/mmlu_pro.jsonl",
+    "data/processed/strategyqa.jsonl",
+    "data/processed/truthfulqa_mc.jsonl"
+  ],
+  "total_selected": 840,
+  "untouched_candidate_counts": {
+    "gsm8k": 1199,
+    "math500": 380,
+    "medmcqa": 4063,
+    "medqa": 1153,
+    "mmlu_pro": 11912,
+    "strategyqa": 567,
+    "truthfulqa_mc": 564
+  }
+}
